@@ -1,0 +1,100 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat *)",
+      "Bash(echo *)",
+      "Bash(gh api repos/*/contents/*)",
+      "Bash(gh api repos/*/issues/*/comments)",
+      "Bash(gh api repos/*/pulls/*/comments)",
+      "Bash(gh api repos/*/pulls/*/comments/*)",
+      "Bash(gh api repos/*/pulls/*/files)",
+      "Bash(gh api repos/*/readme)",
+      "Bash(gh api repos/*/releases)",
+      "Bash(gh issue create *)",
+      "Bash(gh issue list *)",
+      "Bash(gh issue view *)",
+      "Bash(gh label list *)",
+      "Bash(gh pr checks *)",
+      "Bash(gh pr create *)",
+      "Bash(gh pr diff *)",
+      "Bash(gh pr edit *)",
+      "Bash(gh pr list *)",
+      "Bash(gh pr view *)",
+      "Bash(gh release list *)",
+      "Bash(gh release view *)",
+      "Bash(gh repo view *)",
+      "Bash(gh run list *)",
+      "Bash(gh run view *)",
+      "Bash(gh run watch *)",
+      "Bash(gh search *)",
+      "Bash(git add *)",
+      "Bash(git checkout *)",
+      "Bash(git commit *)",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "Bash(git push -u origin *)",
+      "Bash(grep *)",
+      "Bash(helm search repo *)",
+      "Bash(helm show *)",
+      "Bash(kubectl * get *)",
+      "Bash(kubectl get *)",
+      "mcp__claude_ai_Grafana__generate_deeplink",
+      "mcp__claude_ai_Grafana__get_dashboard_panel_queries",
+      "mcp__claude_ai_Grafana__get_dashboard_property",
+      "mcp__claude_ai_Grafana__get_dashboard_summary",
+      "mcp__claude_ai_Grafana__get_datasource_by_name",
+      "mcp__claude_ai_Grafana__list_alert_groups",
+      "mcp__claude_ai_Grafana__list_alert_rules",
+      "mcp__claude_ai_Grafana__list_datasources",
+      "mcp__claude_ai_Grafana__list_loki_label_values",
+      "mcp__claude_ai_Grafana__list_prometheus_label_names",
+      "mcp__claude_ai_Grafana__list_prometheus_label_values",
+      "mcp__claude_ai_Grafana__list_prometheus_metric_names",
+      "mcp__claude_ai_Grafana__query_loki_logs",
+      "mcp__claude_ai_Grafana__query_loki_stats",
+      "mcp__claude_ai_Grafana__query_prometheus_histogram",
+      "mcp__claude_ai_Grafana__query_prometheus",
+      "mcp__claude_ai_Grafana__search_dashboards",
+      "mcp__claude_ai_Grafana__search_folders",
+      "mcp__claude_ai_Notion__notion-fetch",
+      "mcp__claude_ai_Slack__slack_read_*",
+      "mcp__claude_ai_Slack__slack_read_thread",
+      "WebFetch(domain:developers.google.com)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:docs.cloud.google.com)",
+      "WebFetch(domain:docs.github.com)",
+      "WebFetch(domain:github.blog)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:grafana.com)",
+      "WebFetch(domain:support.claude.com)",
+      "WebFetch(domain:www.humanlayer.dev)",
+      "WebSearch"
+    ],
+    "deny": [
+      "Bash(git push *--force*)",
+      "Bash(git push * -f)",
+      "Bash(git push * -f *)"
+    ]
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": []
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "wt list statusline --format=claude-code"
+  },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "worktrunk@worktrunk": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "dev-ai-coding-tips@kognic-ai-tools": true,
+    "devplat@kognic-devplat": true,
+    "superpowers@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true
+}
