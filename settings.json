@@ -38,6 +38,7 @@
       "Bash(helm show *)",
       "Bash(kubectl * get *)",
       "Bash(kubectl get *)",
+      "Bash(wt *)",
       "mcp__claude_ai_Grafana__generate_deeplink",
       "mcp__claude_ai_Grafana__get_dashboard_panel_queries",
       "mcp__claude_ai_Grafana__get_dashboard_property",
@@ -46,6 +47,7 @@
       "mcp__claude_ai_Grafana__list_alert_groups",
       "mcp__claude_ai_Grafana__list_alert_rules",
       "mcp__claude_ai_Grafana__list_datasources",
+      "mcp__claude_ai_Grafana__list_loki_label_names",
       "mcp__claude_ai_Grafana__list_loki_label_values",
       "mcp__claude_ai_Grafana__list_prometheus_label_names",
       "mcp__claude_ai_Grafana__list_prometheus_label_values",
@@ -57,6 +59,7 @@
       "mcp__claude_ai_Grafana__search_dashboards",
       "mcp__claude_ai_Grafana__search_folders",
       "mcp__claude_ai_Notion__notion-fetch",
+      "mcp__claude_ai_Notion__notion-search",
       "mcp__claude_ai_Slack__slack_read_*",
       "mcp__claude_ai_Slack__slack_read_thread",
       "WebFetch(domain:developers.google.com)",
@@ -76,25 +79,24 @@
       "Bash(git push * -f *)"
     ]
   },
-  "hooks": {
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": []
-      }
-    ]
-  },
   "statusLine": {
     "type": "command",
     "command": "wt list statusline --format=claude-code"
   },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
-    "worktrunk@worktrunk": true,
     "pyright-lsp@claude-plugins-official": true,
-    "dev-ai-coding-tips@kognic-ai-tools": true,
-    "devplat@kognic-devplat": true,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "kognic-operations@kognic-claude-plugins": true,
+    "worktrunk@worktrunk": true,
+    "kognic-cloud@kognic-claude-plugins": true,
+    "kognic-code-quality@kognic-claude-plugins": true,
+    "kognic-core@kognic-claude-plugins": true,
+    "kognic-devplat@kognic-claude-plugins": true,
+    "kognic-git@kognic-claude-plugins": true,
+    "kognic-golang@kognic-claude-plugins": true,
+    "kognic-python@kognic-claude-plugins": true,
+    "anthropic-review-pr@kognic-claude-plugins": true
   },
   "alwaysThinkingEnabled": true
 }
