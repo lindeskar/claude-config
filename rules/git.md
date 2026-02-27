@@ -7,3 +7,4 @@
 - Never force-push
 - Run git commands without `-C` when already in the repo directory
 - Run `git add` and `git commit` as separate Bash tool calls — never chain them with `&&` or `;`
+- For multi-line commit messages: pass a multi-line string directly to `git commit -m` — never use command substitution (`$(...)`) in commit commands
