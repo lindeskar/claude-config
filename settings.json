@@ -1,4 +1,21 @@
 {
+  "alwaysThinkingEnabled": true,
+  "enabledPlugins": {
+    "anthropic-review-pr@kognic-claude-plugins": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "kognic-cloud@kognic-claude-plugins": true,
+    "kognic-code-quality@kognic-claude-plugins": true,
+    "kognic-company-info@kognic-claude-plugins": true,
+    "kognic-core@kognic-claude-plugins": true,
+    "kognic-devops@kognic-claude-plugins": true,
+    "kognic-devplat@kognic-claude-plugins": true,
+    "kognic-git@kognic-claude-plugins": true,
+    "kognic-golang@kognic-claude-plugins": true,
+    "kognic-python@kognic-claude-plugins": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "worktrunk@worktrunk": true
+  },
   "permissions": {
     "additionalDirectories": ["/Users/alex/go/pkg"],
     "allow": [
@@ -90,23 +107,7 @@
     ]
   },
   "statusLine": {
-    "type": "command",
-    "command": "wt list statusline --format=claude-code"
-  },
-  "enabledPlugins": {
-    "anthropic-review-pr@kognic-claude-plugins": true,
-    "gopls-lsp@claude-plugins-official": true,
-    "kognic-cloud@kognic-claude-plugins": true,
-    "kognic-code-quality@kognic-claude-plugins": true,
-    "kognic-core@kognic-claude-plugins": true,
-    "kognic-devops@kognic-claude-plugins": true,
-    "kognic-devplat@kognic-claude-plugins": true,
-    "kognic-git@kognic-claude-plugins": true,
-    "kognic-golang@kognic-claude-plugins": true,
-    "kognic-python@kognic-claude-plugins": true,
-    "pyright-lsp@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
-    "worktrunk@worktrunk": true
-  },
-  "alwaysThinkingEnabled": true
+    "command": "wt list statusline --format=claude-code",
+    "type": "command"
+  }
 }
