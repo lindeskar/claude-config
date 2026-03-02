@@ -17,7 +17,13 @@
     "worktrunk@worktrunk": true
   },
   "permissions": {
-    "additionalDirectories": ["/Users/alex/go/pkg"],
+    "additionalDirectories": [
+      "/Users/alex/go/pkg",
+      "/Users/alex/Code/_kognic",
+      "/Users/alex/Code/_kognic_terraform",
+      "/Users/alex/Code/_forks",
+      "/Users/alex/Code/_private/claude-config"
+    ],
     "allow": [
       "Bash(crane ls *)",
       "Bash(gh api repos/*/contents/*)",
