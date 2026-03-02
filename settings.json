@@ -26,6 +26,7 @@
     ],
     "allow": [
       "Bash(crane ls *)",
+      "Bash(gh api repos/*/contents)",
       "Bash(gh api repos/*/contents/*)",
       "Bash(gh api repos/*/issues/*/comments)",
       "Bash(gh api repos/*/pulls/*/comments*)",
@@ -44,6 +45,7 @@
       "Bash(gh release list *)",
       "Bash(gh release view *)",
       "Bash(gh repo view *)",
+      "Bash(gh repo list *)",
       "Bash(gh run list *)",
       "Bash(gh run view *)",
       "Bash(gh run watch *)",
