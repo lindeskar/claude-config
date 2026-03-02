@@ -22,7 +22,8 @@
       "/Users/alex/Code/_kognic",
       "/Users/alex/Code/_kognic_terraform",
       "/Users/alex/Code/_forks",
-      "/Users/alex/Code/_private/claude-config"
+      "/Users/alex/Code/_private/claude-config",
+      "/Users/alex/.claude/plugins/cache/claude-plugins-official/superpowers"
     ],
     "allow": [
       "Bash(crane ls *)",
