@@ -17,7 +17,7 @@ When creating PRs or issues in company repos (`annotell` org) that relate to wor
 
 ## Creating issues
 
-When starting work on a task that doesn't match an existing open issue, ask the user if they want a personal issue created for it:
+When starting work on a task that doesn't match an existing open issue, ask the user if they want a personal issue created for it. Keep titles and descriptions very brief — these are personal reminders, not formal specs:
 `gh issue create --repo lindeskar/work --title "<title>" --body "<description>"`
 
 ## Updating issues
@@ -25,5 +25,6 @@ When starting work on a task that doesn't match an existing open issue, ask the 
 - When starting work on an issue, set its project status to "In Progress":
   `gh project item-edit --project-id PVT_kwHOARWoXc4BQZd5 --id <item-id> --field-id PVTSSF_lAHOARWoXc4BQZd5zg-h5y0 --single-select-option-id 47fc9ee4`
   To find the item ID, use `gh project item-list 1 --owner lindeskar --format json` and match by issue number
+- When committing to `lindeskar/work` for work related to an issue, reference it in the commit message (e.g. `docs: add envoy notes #4`)
 - When a task from a personal issue is completed (PR merged, change deployed), comment on the personal issue with the outcome
 - Close the personal issue only when explicitly asked — the user manages issue lifecycle
