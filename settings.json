@@ -141,7 +141,11 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:grafana.com)",
       "WebFetch(domain:kognic.com)",
+      "WebFetch(domain:kognic.io)",
+      "WebFetch(domain:kognic.net)",
+      "WebFetch(domain:o11y.kognic.io)",
       "WebFetch(domain:staging.kognic.com)",
+      "WebFetch(domain:staging.kognic.io)",
       "WebFetch(domain:support.claude.com)",
       "WebFetch(domain:www.humanlayer.dev)",
       "WebSearch"
