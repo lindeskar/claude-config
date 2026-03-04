@@ -16,6 +16,15 @@
     "superpowers@claude-plugins-official": true,
     "worktrunk@worktrunk": true
   },
+  "extraKnownMarketplaces": {
+    "kognic-claude-plugins": {
+      "autoUpdate": true,
+      "source": {
+        "repo": "kognic-internal/claude-plugins",
+        "source": "github"
+      }
+    }
+  },
   "permissions": {
     "additionalDirectories": [
       "/Users/alex/go/pkg",
