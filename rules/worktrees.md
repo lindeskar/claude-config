@@ -6,6 +6,7 @@
 - Clean up after PR merge: `wt remove <branch>`
 - Use `wt list` to check worktrees and `wt switch` to navigate between them
 - Stay contained — never touch files in the main checkout or other worktrees
+- When editing a PR in another repo, `cd` to that repo and run `wt list` to find existing worktrees — don't use `gh pr checkout`
 - For detailed worktrunk usage, invoke the `worktrunk:worktrunk` skill
 
 ## Working directory in worktrees
