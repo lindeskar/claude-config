@@ -1,39 +1,5 @@
 {
-  "alwaysThinkingEnabled": true,
-  "enabledPlugins": {
-    "anthropic-review-pr@kognic-claude-plugins": true,
-    "gopls-lsp@claude-plugins-official": true,
-    "kognic-cloud@kognic-claude-plugins": true,
-    "kognic-code-quality@kognic-claude-plugins": true,
-    "kognic-company-info@kognic-claude-plugins": true,
-    "kognic-core@kognic-claude-plugins": true,
-    "kognic-devops@kognic-claude-plugins": true,
-    "kognic-devplat@kognic-claude-plugins": true,
-    "kognic-git@kognic-claude-plugins": true,
-    "kognic-golang@kognic-claude-plugins": true,
-    "kognic-python@kognic-claude-plugins": true,
-    "pyright-lsp@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
-    "worktrunk@worktrunk": true
-  },
-  "extraKnownMarketplaces": {
-    "kognic-claude-plugins": {
-      "autoUpdate": true,
-      "source": {
-        "repo": "kognic-internal/claude-plugins",
-        "source": "github"
-      }
-    }
-  },
   "permissions": {
-    "additionalDirectories": [
-      "/Users/alex/go/pkg",
-      "/Users/alex/Code/_kognic",
-      "/Users/alex/Code/_kognic_terraform",
-      "/Users/alex/Code/_forks",
-      "/Users/alex/Code/_private/claude-config",
-      "/Users/alex/.claude/plugins/cache/claude-plugins-official/superpowers"
-    ],
     "allow": [
       "Bash(awk *)",
       "Bash(cat *)",
@@ -97,6 +63,7 @@
       "Bash(git diff *)",
       "Bash(git fetch *)",
       "Bash(git log *)",
+      "Bash(git ls-remote *)",
       "Bash(git pull *)",
       "Bash(git push -u origin *)",
       "Bash(git push)",
@@ -168,10 +135,45 @@
       "Bash(git push * -f *)",
       "Bash(git push * -f)",
       "Bash(git push *--force*)"
+    ],
+    "additionalDirectories": [
+      "/Users/alex/go/pkg",
+      "/Users/alex/Code/_kognic",
+      "/Users/alex/Code/_kognic_terraform",
+      "/Users/alex/Code/_forks",
+      "/Users/alex/Code/_private/claude-config",
+      "/Users/alex/.claude/plugins/cache/claude-plugins-official/superpowers"
     ]
   },
   "statusLine": {
-    "command": "wt list statusline --format=claude-code",
-    "type": "command"
-  }
+    "type": "command",
+    "command": "wt list statusline --format=claude-code"
+  },
+  "enabledPlugins": {
+    "anthropic-review-pr@kognic-claude-plugins": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "kognic-cloud@kognic-claude-plugins": true,
+    "kognic-code-quality@kognic-claude-plugins": true,
+    "kognic-company-info@kognic-claude-plugins": true,
+    "kognic-core@kognic-claude-plugins": true,
+    "kognic-devops@kognic-claude-plugins": true,
+    "kognic-devplat@kognic-claude-plugins": true,
+    "kognic-git@kognic-claude-plugins": true,
+    "kognic-golang@kognic-claude-plugins": true,
+    "kognic-python@kognic-claude-plugins": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "worktrunk@worktrunk": true
+  },
+  "extraKnownMarketplaces": {
+    "kognic-claude-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "kognic-internal/claude-plugins"
+      },
+      "autoUpdate": true
+    }
+  },
+  "alwaysThinkingEnabled": true,
+  "voiceEnabled": false
 }
