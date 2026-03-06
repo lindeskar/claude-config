@@ -5,6 +5,7 @@
       "Bash(cat *)",
       "Bash(crane ls *)",
       "Bash(find *)",
+      "Bash(gh api repos/*/compare/*)",
       "Bash(gh api repos/*/contents)",
       "Bash(gh api repos/*/contents/*)",
       "Bash(gh api repos/*/issues/* --jq *)",
