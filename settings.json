@@ -87,6 +87,7 @@
       "Bash(terraform fmt *)",
       "Bash(wt *)",
       "mcp__claude_ai_Grafana__generate_deeplink",
+      "mcp__claude_ai_Grafana__get_dashboard_by_uid",
       "mcp__claude_ai_Grafana__get_dashboard_panel_queries",
       "mcp__claude_ai_Grafana__get_dashboard_property",
       "mcp__claude_ai_Grafana__get_dashboard_summary",
