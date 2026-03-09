@@ -16,7 +16,7 @@ When creating PRs or issues in company repos (`annotell` org) that relate to wor
 
 - Comment on the personal issue with a link to the company PR/issue:
   `gh issue comment <number> --repo lindeskar/work --body "PR: <url>"`
-- NEVER reference personal issues (`lindeskar/work`) in company PR titles, descriptions, or commit messages — these are private and should not appear in company repos
+- NEVER reference personal repos or issues (`lindeskar/work`) anywhere in company repos — not in PR titles, descriptions, commit messages, issue bodies, or comments. These are private and must not appear in company repos.
 
 ## Creating issues
 
