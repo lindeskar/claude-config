@@ -117,11 +117,11 @@
       "mcp__claude_ai_Slack__slack_search_users",
       "WebFetch(domain:app.kognic.com)",
       "WebFetch(domain:developers.google.com)",
+      "WebFetch(domain:docs.anthropic.com)",
       "WebFetch(domain:docs.claude.com)",
       "WebFetch(domain:docs.cloud.google.com)",
       "WebFetch(domain:docs.github.com)",
       "WebFetch(domain:github.blog)",
-      "WebFetch(domain:github.com)",
       "WebFetch(domain:grafana.com)",
       "WebFetch(domain:kognic.com)",
       "WebFetch(domain:kognic.io)",
@@ -178,5 +178,6 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "voiceEnabled": false
+  "voiceEnabled": false,
+  "effortLevel": "high"
 }
