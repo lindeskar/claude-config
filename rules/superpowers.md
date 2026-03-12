@@ -2,8 +2,9 @@
 
 ## Plan and design files
 
-- Write plan/design docs to `docs/plans/` as the skill instructs, but NEVER `git add` or `git commit` them
-- These files are working artifacts, not deliverables — do not include them in commits or PRs
+- Write plan/design docs to `docs/plans/` as the skill instructs
+- In `lindeskar/work`: plan files may be committed and included in PRs
+- In all other repos: NEVER `git add` or `git commit` plan files — they are working artifacts, not deliverables
 
 ## Commit strategy
 

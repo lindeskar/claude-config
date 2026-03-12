@@ -6,3 +6,8 @@
 - `_private/` — personal repos, manually cloned when needed (Claude may clone here)
 - `_public/` — public repos, manually cloned when needed (Claude may clone here)
 - `_tmp/` — scratch space (Claude may clone here)
+
+## Cloning repos
+
+- Always use `gh repo clone` — never `git clone`: `gh repo clone annotell/kognic-pubsub-python`
+- Company repos (`annotell` org) go in `/Users/alex/Code/_kognic/`
