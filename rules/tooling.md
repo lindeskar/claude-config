@@ -13,3 +13,4 @@
 - Use LSP diagnostics and go-to-definition to understand and troubleshoot code — don't guess at types, imports, or call sites by grepping
 - When investigating errors: check LSP/compiler output first, then read the relevant source — don't shotgun-grep the codebase
 - Grafana: always use the Grafana MCP server tools for querying dashboards, logs, metrics, alerts, and incidents — never curl or WebFetch the Grafana web UI
+- When investigating alerts, crash loops, or performance issues: invoke `kognic-devops:investigate` first — it has LogQL/PromQL patterns and datasource UIDs that prevent wasted queries
