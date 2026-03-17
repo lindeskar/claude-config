@@ -7,7 +7,8 @@
 - `_public/` — public repos, manually cloned when needed (Claude may clone here)
 - `_tmp/` — scratch space (Claude may clone here)
 
-## Cloning repos
+## Accessing other repos
 
+- Before using the GitHub API to browse a repo's contents, check if it's already cloned locally (e.g. `ls /Users/alex/Code/_kognic/<repo-name>`) — local reads are faster and don't burn API calls
 - Always use `gh repo clone` — never `git clone`: `gh repo clone annotell/kognic-pubsub-python`
 - Company repos (`annotell` org) go in `/Users/alex/Code/_kognic/`

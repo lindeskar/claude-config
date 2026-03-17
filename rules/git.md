@@ -2,7 +2,8 @@
 
 - Conventional commit messages, single line: `<type>[scope]: <description>`
 - Append a `!` after `<type>[scope]` to indicate a BREAKING change
-- Always create PRs in draft mode: `gh pr create --draft`
+- Always create PRs in draft mode with a description: `gh pr create --draft --title "..." --body "..."`
+- PR body must include a `## Summary` section with 1-3 bullet points explaining the change
 - Never amend commits
 - Never force-push
 - Run git commands without `-C` when already in the repo directory
