@@ -151,6 +151,7 @@
       "/Users/alex/.claude/plugins/cache/kognic-claude-plugins"
     ]
   },
+  "model": "claude-opus-4-6[1m]",
   "statusLine": {
     "type": "command",
     "command": "wt list statusline --format=claude-code"
@@ -166,6 +167,7 @@
     "kognic-devplat@kognic-claude-plugins": true,
     "kognic-git@kognic-claude-plugins": true,
     "kognic-golang@kognic-claude-plugins": true,
+    "kognic-platform@kognic-claude-plugins": true,
     "kognic-python@kognic-claude-plugins": true,
     "pyright-lsp@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
@@ -180,8 +182,38 @@
       "autoUpdate": true
     }
   },
-  "alwaysThinkingEnabled": true,
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "enableWeakerNetworkIsolation": true,
+    "network": {
+      "allowedDomains": [
+        "github.com",
+        "api.github.com",
+        "*.googleapis.com",
+        "app.kognic.com",
+        "developers.google.com",
+        "docs.anthropic.com",
+        "docs.claude.com",
+        "docs.cloud.google.com",
+        "docs.github.com",
+        "github.blog",
+        "grafana.com",
+        "kognic.com",
+        "kognic.io",
+        "kognic.net",
+        "o11y.kognic.io",
+        "staging.kognic.com",
+        "staging.kognic.io",
+        "support.claude.com",
+        "www.humanlayer.de"
+      ],
+      "allowUnixSockets": [
+        "/var/run/docker.sock"
+      ],
+      "allowLocalBinding": true
+    }
+  },
   "effortLevel": "high",
-  "voiceEnabled": false,
-  "model": "claude-opus-4-6[1m]"
+  "voiceEnabled": false
 }
