@@ -162,7 +162,6 @@
     "kognic-cloud@kognic-claude-plugins": true,
     "kognic-code-quality@kognic-claude-plugins": true,
     "kognic-company-info@kognic-claude-plugins": true,
-    "kognic-core@kognic-claude-plugins": true,
     "kognic-devops@kognic-claude-plugins": true,
     "kognic-devplat@kognic-claude-plugins": true,
     "kognic-git@kognic-claude-plugins": true,
@@ -171,7 +170,10 @@
     "kognic-python@kognic-claude-plugins": true,
     "pyright-lsp@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
-    "worktrunk@worktrunk": true
+    "worktrunk@worktrunk": true,
+    "kognic-claude-toolkit@kognic-claude-plugins": true,
+    "cloudflare@cloudflare": true,
+    "kognic-brand@kognic-claude-plugins": true
   },
   "extraKnownMarketplaces": {
     "kognic-claude-plugins": {
@@ -180,39 +182,53 @@
         "repo": "kognic-internal/claude-plugins"
       },
       "autoUpdate": true
+    },
+    "cloudflare": {
+      "source": {
+        "source": "github",
+        "repo": "cloudflare/skills"
+      },
+      "autoUpdate": true
     }
   },
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": true,
-    "enableWeakerNetworkIsolation": true,
     "network": {
       "allowedDomains": [
-        "github.com",
-        "api.github.com",
         "*.googleapis.com",
+        "api.github.com",
         "app.kognic.com",
         "developers.google.com",
         "docs.anthropic.com",
         "docs.claude.com",
         "docs.cloud.google.com",
         "docs.github.com",
+        "ghcr.io",
         "github.blog",
+        "github.com",
         "grafana.com",
         "kognic.com",
         "kognic.io",
         "kognic.net",
         "o11y.kognic.io",
+        "pkg-containers.githubusercontent.com",
+        "results-receiver.actions.githubusercontent.com",
         "staging.kognic.com",
         "staging.kognic.io",
         "support.claude.com",
         "www.humanlayer.de"
       ],
       "allowUnixSockets": [
-        "/var/run/docker.sock"
+        "/var/run/docker.sock",
+        "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
       ],
       "allowLocalBinding": true
-    }
+    },
+    "enableWeakerNetworkIsolation": true,
+    "excludedCommands": [
+      "git"
+    ]
   },
   "effortLevel": "high",
   "voiceEnabled": false
