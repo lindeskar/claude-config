@@ -6,7 +6,7 @@
 - PR body must include a `## Summary` section with 1-3 bullet points explaining the change
 - Never amend commits
 - Never force-push
-- Run git commands without `-C` when already in the repo directory
+- Never use `git -C <path>` — always `cd` to the repo directory first, then run git commands without `-C`
 - Run `git add` and `git commit` as separate Bash tool calls — never chain them with `&&` or `;`
 - For multi-line commit messages: pass a multi-line string directly to `git commit -m` — never use command substitution (`$(...)`) in commit commands
 - Match commit granularity to the task — bulk-adding new files (migrations, scaffolding) is one commit, not one per directory. Split commits only when changes are incremental to existing code and benefit from independent review or rollback.
