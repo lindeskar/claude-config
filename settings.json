@@ -148,7 +148,8 @@
       "/Users/alex/Code/_public",
       "/Users/alex/Code/_private/claude-config",
       "/Users/alex/.claude/plugins/cache/claude-plugins-official/superpowers",
-      "/Users/alex/.claude/plugins/cache/kognic-claude-plugins"
+      "/Users/alex/.claude/plugins/cache/kognic-claude-plugins",
+      "/Users/alex/.claude/memory"
     ]
   },
   "statusLine": {
