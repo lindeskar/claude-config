@@ -151,7 +151,6 @@
       "/Users/alex/.claude/plugins/cache/kognic-claude-plugins"
     ]
   },
-  "model": "claude-opus-4-6[1m]",
   "statusLine": {
     "type": "command",
     "command": "wt list statusline --format=claude-code"
@@ -159,7 +158,6 @@
   "enabledPlugins": {
     "anthropic-review-pr@kognic-claude-plugins": true,
     "gopls-lsp@claude-plugins-official": true,
-    "kognic-cloud@kognic-claude-plugins": true,
     "kognic-code-quality@kognic-claude-plugins": true,
     "kognic-company-info@kognic-claude-plugins": true,
     "kognic-devops@kognic-claude-plugins": true,
@@ -173,7 +171,8 @@
     "worktrunk@worktrunk": true,
     "kognic-claude-toolkit@kognic-claude-plugins": true,
     "cloudflare@cloudflare": true,
-    "kognic-brand@kognic-claude-plugins": true
+    "kognic-brand@kognic-claude-plugins": true,
+    "kognic-slides@kognic-claude-plugins": true
   },
   "extraKnownMarketplaces": {
     "kognic-claude-plugins": {
@@ -220,16 +219,16 @@
         "www.humanlayer.de"
       ],
       "allowUnixSockets": [
-        "/var/run/docker.sock",
         "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
       ],
       "allowLocalBinding": true
     },
     "enableWeakerNetworkIsolation": true,
     "excludedCommands": [
-      "git"
+      "git",
+      "docker *"
     ]
   },
-  "effortLevel": "high",
+  "effortLevel": "xhigh",
   "voiceEnabled": false
 }
