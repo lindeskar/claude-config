@@ -3,6 +3,7 @@
     "allow": [
       "Bash(awk *)",
       "Bash(cat *)",
+      "Bash(colima status *)",
       "Bash(crane ls *)",
       "Bash(find *)",
       "Bash(gh api repos/*/compare/*)",
@@ -73,8 +74,10 @@
       "Bash(git status)",
       "Bash(grep *)",
       "Bash(head *)",
+      "Bash(helm lint *)",
       "Bash(helm search repo *)",
       "Bash(helm show *)",
+      "Bash(helm template *)",
       "Bash(kubectl * get *)",
       "Bash(kubectl get *)",
       "Bash(ls *)",
