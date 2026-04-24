@@ -229,10 +229,13 @@
     },
     "enableWeakerNetworkIsolation": true,
     "excludedCommands": [
-      "git",
-      "docker *"
+      "git *",
+      "docker *",
+      "helm *"
     ]
   },
   "effortLevel": "xhigh",
-  "voiceEnabled": false
+  "theme": "light",
+  "voiceEnabled": false,
+  "skipAutoPermissionPrompt": true
 }
