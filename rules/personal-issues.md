@@ -12,7 +12,7 @@ The repo `lindeskar/work` uses GitHub Issues as a personal todo list.
 
 Cross-linking is **one-directional**: personal issues link to company PRs, never the reverse.
 
-When creating PRs or issues in company repos (`annotell` org) that relate to work initiated from a personal issue:
+When creating PRs or issues in company repos (`annotell` or `kognic-internal` orgs) that relate to work initiated from a personal issue:
 
 - Comment on the personal issue with a link to the company PR/issue:
   `gh issue comment <number> --repo lindeskar/work --body "PR: <url>"`
