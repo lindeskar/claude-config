@@ -5,7 +5,7 @@ Version-controlled source of truth for Claude Code configuration (`~/.claude`).
 ## Structure
 
 - `global-CLAUDE.md` — global developer instructions, symlinked as `~/.claude/CLAUDE.md` (loaded into every session)
-- `rules/` — one markdown file per topic, symlinked as `~/.claude/rules/`
+- `rules/` — one markdown file per topic, symlinked as `~/.claude/rules/`. Claude Code auto-discovers every `.md` file under `~/.claude/rules/` and loads it at session start with the same priority as `CLAUDE.md`, no `@`-include needed. See [docs.claude.com/en/docs/claude-code/memory#user-level-rules](https://docs.claude.com/en/docs/claude-code/memory#user-level-rules).
 - `settings.json` — permissions, plugins, and feature flags, symlinked as `~/.claude/settings.json`
 - `Makefile` — setup automation
 
