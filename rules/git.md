@@ -3,6 +3,7 @@
 - Conventional commit messages, single line: `<type>[scope]: <description>`
 - Append a `!` after `<type>[scope]` to indicate a BREAKING change
 - Always create PRs in draft mode with a description: `gh pr create --draft --title "..." --body "..."`
+- Add the `autoreview` label to PRs that only touch staging environments in `kognic-cd`, `k8s-platform-gitops`, or `k8s-platform-gitops-volcano` — the autoreview bot skips unlabeled PRs. Pass `--label autoreview` to `gh pr create`, or `gh pr edit <n> --add-label autoreview` on an existing PR. Never add it to PRs that touch prod paths.
 - PR body: match detail to the change size. For small/simple PRs (single-file or narrow scope), write one or two sentences — no `## Summary` header, no bullet list. Use backticks for identifiers/zones/paths and bold for the key takeaway (e.g. `**in log mode**`). Only use a `## Summary` section with bullets when the change genuinely spans multiple concerns that benefit from enumeration.
 - PR body should describe what changed, not what was intentionally omitted — don't enumerate things you didn't do unless a reviewer would otherwise be surprised by the gap.
 - Never amend commits
