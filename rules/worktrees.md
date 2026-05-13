@@ -1,6 +1,7 @@
 # Worktrees
 
 - Always create a worktree for feature work — never work directly on main/master
+- **Exception**: `lindeskar/work` (`~/Code/_private/work/`) is a personal notes/scratch repo with no build or CI — default to direct commit on main for docs, plans, designs, wiki pages, and memory entries. No worktree needed. Reference the issue in the commit message (e.g. `docs(plans): ... #61`)
 - Create the worktree first, then make all edits there — don't edit in main checkout and copy files over
 - Use `wt switch --create <branch>` to create worktrees (path template configured in worktrunk)
 - Clean up after PR merge: `wt remove <branch>`
