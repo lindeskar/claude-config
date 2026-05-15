@@ -10,5 +10,6 @@
 - Never force-push
 - Never use `git -C <path>` — always `cd` to the repo directory first, then run git commands without `-C`
 - Run `git add` and `git commit` as separate Bash tool calls — never chain them with `&&` or `;`
+- Never run `git commit` with `run_in_background: true` — commits are signed via 1Password, which needs an interactive prompt that backgrounded Bash can't render. The commit fails with `failed to fill whole buffer`. Always commit in the foreground.
 - For multi-line commit messages: pass a multi-line string directly to `git commit -m` — never use command substitution (`$(...)`) in commit commands
 - Match commit granularity to the task — bulk-adding new files (migrations, scaffolding) is one commit, not one per directory. Split commits only when changes are incremental to existing code and benefit from independent review or rollback.
