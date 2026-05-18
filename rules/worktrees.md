@@ -3,6 +3,7 @@
 - Always create a worktree for feature work — never work directly on main/master
 - **Exception**: personal repos under `lindeskar/*` (e.g. `lindeskar/work`, `lindeskar/dotfiles`, `lindeskar/claude-config`) have no build or CI — default to direct commit on main for docs, plans, designs, wiki pages, memory entries, and config snapshots. No worktree needed. When the repo uses GitHub Issues as a todo list (e.g. `lindeskar/work`), reference the issue in the commit message (e.g. `docs(plans): ... #61`)
 - Create the worktree first, then make all edits there — don't edit in main checkout and copy files over
+- **Update local master before creating a worktree.** `wt switch --create` branches from local `master`/`main`, not `origin/master`. If local is stale, the worktree starts behind and the PR is based on an outdated base. Run `git fetch origin master:master` (works from any branch when master is fast-forward-only) as a standalone Bash call before `wt switch --create`. If local master has diverged, resolve that first.
 - Use `wt switch --create <branch>` to create worktrees (path template configured in worktrunk)
 - Clean up after PR merge: `wt remove <branch>`
 - Use `wt list` to check worktrees and `wt switch` to navigate between them
@@ -23,7 +24,7 @@ Bash: git status
 Bash: cd /path/to/worktree && git status
 ```
 
-- Run `cd` alone — never chain it with `&&` or `;`
+- Run `cd` alone — never chain it with `&&` or `;` (see `tooling.md` for the general no-composite-commands rule)
 - Do this once right after `wt switch --create`, then all subsequent commands run in the worktree
 - If you lose track of the working directory, run `pwd` to check and `cd` again if needed
 
