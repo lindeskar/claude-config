@@ -1,7 +1,7 @@
 # Worktrees
 
 - Always create a worktree for feature work — never work directly on main/master
-- **Exception**: `lindeskar/work` (`~/Code/_private/work/`) is a personal notes/scratch repo with no build or CI — default to direct commit on main for docs, plans, designs, wiki pages, and memory entries. No worktree needed. Reference the issue in the commit message (e.g. `docs(plans): ... #61`)
+- **Exception**: personal repos under `lindeskar/*` (e.g. `lindeskar/work`, `lindeskar/dotfiles`, `lindeskar/claude-config`) have no build or CI — default to direct commit on main for docs, plans, designs, wiki pages, memory entries, and config snapshots. No worktree needed. When the repo uses GitHub Issues as a todo list (e.g. `lindeskar/work`), reference the issue in the commit message (e.g. `docs(plans): ... #61`)
 - Create the worktree first, then make all edits there — don't edit in main checkout and copy files over
 - Use `wt switch --create <branch>` to create worktrees (path template configured in worktrunk)
 - Clean up after PR merge: `wt remove <branch>`
@@ -26,3 +26,14 @@ Bash: cd /path/to/worktree && git status
 - Run `cd` alone — never chain it with `&&` or `;`
 - Do this once right after `wt switch --create`, then all subsequent commands run in the worktree
 - If you lose track of the working directory, run `pwd` to check and `cd` again if needed
+
+## Built-in alternative
+
+Claude Code has its own worktree support, complementary to `wt`:
+
+- `claude --worktree <name>` launches a session in `.claude/worktrees/<name>/` on branch `worktree-<name>` — useful for one-off isolated sessions
+- `claude --worktree "#1234"` checks out a PR into `.claude/worktrees/pr-1234`
+- Subagents can set `isolation: "worktree"` to get a throwaway worktree per agent run (cleaned up automatically if the agent made no changes)
+- `.worktreeinclude` at the repo root (gitignore syntax) seeds gitignored files like `.env` into new worktrees — useful when a fresh checkout needs local config to run
+
+`wt` remains the default for feature work — path template, merge/squash, and lifecycle hooks are already configured. Built-in worktrees live under `.claude/worktrees/`; `wt` uses `.worktrees/`. If you mix tools, expect two locations.
