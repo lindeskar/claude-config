@@ -105,6 +105,7 @@
       "mcp__claude_ai_Slack__slack_search_public",
       "mcp__claude_ai_Slack__slack_search_users",
       "mcp__claude_ai_Slack__slack_send_message_draft",
+      "Skill(kognic-claude-toolkit:skill-authoring-guide)",
       "Skill(superpowers:brainstorming)",
       "Skill(superpowers:subagent-driven-development)",
       "WebFetch(domain:agentgateway.dev)",
