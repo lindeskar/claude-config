@@ -8,7 +8,10 @@
 - Clean up after PR merge: `wt remove <branch>`
 - Use `wt list` to check worktrees and `wt switch` to navigate between them
 - Stay contained — never touch files in the main checkout or other worktrees
-- When editing a PR in another repo, `cd` to that repo and run `wt list` to find existing worktrees — don't use `gh pr checkout`
+- When reviewing or editing a PR in another repo, `cd` to that repo and run `wt list` first to find an existing worktree for the PR branch. Never check out the PR in the main repo path — it pollutes the default checkout, leaves cleanup work, and there's almost always already a worktree.
+  - **Reading the diff:** `gh pr diff <n>` is enough — no checkout needed.
+  - **Reading files at PR HEAD:** if `wt list` finds a worktree, `cd` there; otherwise use `gh api repos/.../contents/<path>?ref=pull/<n>/head` or `claude --worktree "#<n>"` for a sandboxed checkout under `.claude/worktrees/pr-<n>/`.
+  - Do not use `gh pr checkout` (clobbers the main worktree's HEAD), and do not `git fetch + git checkout` a PR branch in the main repo path.
 - For detailed worktrunk usage, invoke the `worktrunk:worktrunk` skill
 
 ## Working directory in worktrees
