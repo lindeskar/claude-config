@@ -1,6 +1,10 @@
 # Tooling
 
 - Python: always use `uv run` to run scripts (e.g. `uv run main.py`)
+- Sandbox cache redirects: many tools fail in the command sandbox when writing their default cache under `~/.cache` or `~/Library/Caches` (`Operation not permitted` / `failed to initialize cache`). Redirect the cache into `$TMPDIR` rather than disabling the sandbox — prepend the relevant env var to the command:
+  - `uv` → `UV_CACHE_DIR=$TMPDIR/uv-cache`
+  - `go` (build/test) → `GOCACHE=$TMPDIR/go-build`
+  - `gh` (e.g. `gh run view --log-failed`) → `XDG_CACHE_HOME=$TMPDIR/gh-cache`
 - Helm: read chart values with `helm show values`
 - Use built-in tools for all file operations — never fall back to shell equivalents:
   - **Read** not `cat`, `head`, `tail`, `sed -n` — use `offset`/`limit` params to read specific line ranges
@@ -8,6 +12,7 @@
   - **Grep** not `grep`, `rg`, `awk`
   - **Edit** not `sed`, `awk`
   - **Write** not `echo >`, `cat <<EOF`
+  - Narrow exception: a single mechanical, identical edit applied across many files (e.g. a project-wide import-path or symbol rename) may use one `sed`/`perl -pi` pass when per-file `Edit` would mean dozens of calls. Only when the replacement string is identical everywhere and the result is verified afterward by a compiler/linter/test (e.g. `go build ./...`) or a `Grep` confirming zero stragglers — never for context-dependent edits.
 - Never chain Bash commands with `&&`, `||`, or `;` — run each command as a separate Bash tool call. This includes `cd`, `git`, multi-step inspection (`git status` + `git diff` + `git log`), and any other composite. Reasons: the user can only approve/deny the chain as a whole, intermediate failures are hard to attribute, and an unintended state after a partial run (e.g., a worktree created from stale master) is harder to recover from. Parallel independent calls in one message are fine; chaining in one shell command is not.
 - Never use command substitution (`$(...)` or backticks) in Bash tool calls — these require explicit permission every time. Instead, capture the output in a prior step and use it directly, or use built-in tools (Glob, Grep, Read) to achieve the same result.
 - Use LSP diagnostics and go-to-definition to understand and troubleshoot code — don't guess at types, imports, or call sites by grepping
