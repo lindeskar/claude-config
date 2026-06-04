@@ -5,6 +5,7 @@
   - `uv` → `UV_CACHE_DIR=$TMPDIR/uv-cache`
   - `go` (build/test) → `GOCACHE=$TMPDIR/go-build`
   - `gh` (e.g. `gh run view --log-failed`) → `XDG_CACHE_HOME=$TMPDIR/gh-cache`
+- Provider-plugin tools under the sandbox: `terraform`/`tofu test` (and any `plan`/`apply` that must launch a provider) fail with `Unrecognized remote plugin message` / `Failed to read any lines from plugin's stdout` — the sandbox blocks the provider binary's go-plugin handshake. This is *not* a cache issue; rerun with the sandbox disabled. `init` works sandboxed (download only), so init in-sandbox, then run `test` with the sandbox off.
 - Helm: read chart values with `helm show values`
 - Use built-in tools for all file operations — never fall back to shell equivalents:
   - **Read** not `cat`, `head`, `tail`, `sed -n` — use `offset`/`limit` params to read specific line ranges

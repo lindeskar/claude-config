@@ -7,7 +7,7 @@
 - PR body: match detail to the change size. For small/simple PRs (single-file or narrow scope), write one or two sentences — no `## Summary` header, no bullet list. Use backticks for identifiers/zones/paths and bold for the key takeaway (e.g. `**in log mode**`). Only use a `## Summary` section with bullets when the change genuinely spans multiple concerns that benefit from enumeration.
 - PR body should describe what changed, not what was intentionally omitted — don't enumerate things you didn't do unless a reviewer would otherwise be surprised by the gap.
 - Never amend commits
-- Never force-push
+- Never force-push. When a task would require it — e.g. rebasing a branch whose PR is already pushed — use a no-force alternative instead: `git merge --no-ff <other-branch>` brings the other branch's commits in and pushes normally.
 - Never use `git -C <path>` — always `cd` to the repo directory first, then run git commands without `-C`
 - Run `git add` and `git commit` as separate Bash tool calls — never chain them with `&&` or `;`
 - Never run `git commit` with `run_in_background: true` — commits are signed via 1Password, which needs an interactive prompt that backgrounded Bash can't render. The commit fails with `failed to fill whole buffer`. Always commit in the foreground.
