@@ -1,6 +1,7 @@
 # Tooling
 
 - Python: always use `uv run` to run scripts (e.g. `uv run main.py`)
+- `uv sync`/`uv run` rewrites `uv.lock` source registries to the locally-configured index (e.g. `pypi.org/simple` → `pypi.kognic.io/simple`) when the committed lock used a different index. This is local-env noise, not a real dependency change — `git checkout uv.lock` (or unstage it) before committing unless you intentionally changed deps. Check `git diff uv.lock` after any `uv` invocation in a repo you'll commit to.
 - Sandbox cache redirects: many tools fail in the command sandbox when writing their default cache under `~/.cache` or `~/Library/Caches` (`Operation not permitted` / `failed to initialize cache`). Redirect the cache into `$TMPDIR` rather than disabling the sandbox — prepend the relevant env var to the command:
   - `uv` → `UV_CACHE_DIR=$TMPDIR/uv-cache`
   - `go` (build/test) → `GOCACHE=$TMPDIR/go-build`
