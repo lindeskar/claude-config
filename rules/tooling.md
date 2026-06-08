@@ -7,7 +7,8 @@
   - `go` (build/test) → `GOCACHE=$TMPDIR/go-build`
   - `gh` (e.g. `gh run view --log-failed`) → `XDG_CACHE_HOME=$TMPDIR/gh-cache`
   - `npm`/`npx` (e.g. `npx renovate-config-validator` to lint Renovate presets) → `npm_config_cache=$TMPDIR/npm-cache`. npm ignores `XDG_CACHE_HOME`; without this it fails `EPERM` on `~/.npm/_cacache`.
-- Provider-plugin tools under the sandbox: `terraform`/`tofu test` (and any `plan`/`apply` that must launch a provider) fail with `Unrecognized remote plugin message` / `Failed to read any lines from plugin's stdout` — the sandbox blocks the provider binary's go-plugin handshake. This is *not* a cache issue; rerun with the sandbox disabled. `init` works sandboxed (download only), so init in-sandbox, then run `test` with the sandbox off.
+- Provider-plugin tools under the sandbox: `terraform`/`tofu test` (and any command that must launch the provider — `plan`, `apply`, `providers schema`) fail with `Unrecognized remote plugin message` / `Failed to read any lines from plugin's stdout` — the sandbox blocks the provider binary's go-plugin handshake. This is *not* a cache issue; rerun with the sandbox disabled. `init` works sandboxed (download only), so init in-sandbox, then run the provider-launching command with the sandbox off.
+- Before relying on version-specific behaviour of a tool the CI runs (e.g. a `terraform`/`tofu` feature like `replace_triggered_by`), check the version the CI/runner actually pins — local and CI versions can differ and silently change behaviour. Reproduce against the CI version (download the exact binary if needed) before shipping a fix that depends on it.
 - Helm: read chart values with `helm show values`
 - Use built-in tools for all file operations — never fall back to shell equivalents:
   - **Read** not `cat`, `head`, `tail`, `sed -n` — use `offset`/`limit` params to read specific line ranges
