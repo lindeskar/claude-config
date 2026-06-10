@@ -32,6 +32,7 @@ Bash: cd /path/to/worktree && git status
 - Run `cd` alone — never chain it with `&&` or `;` (see `tooling.md` for the general no-composite-commands rule)
 - Do this once right after `wt switch --create`, then all subsequent commands run in the worktree
 - If you lose track of the working directory, run `pwd` to check and `cd` again if needed
+- The Edit tool's read-before-edit check is per absolute path: having Read a file in the *main checkout* does not allow editing the same file in the worktree — Edit fails with "File has not been read yet". If you explored files before creating the worktree, Read them again at the worktree path before editing
 - To inspect another branch's files while in a worktree, prefer read-only access (`git show <ref>:<path>`, `git diff <a> <b> -- <path>`) over `cd`-ing to the main checkout. If you must `cd` out to look at master, `cd` back to the worktree *before* any write op — especially `git checkout <other-branch> -- <files>`, which silently modifies whichever working tree you're standing in
 
 ## Built-in alternative
