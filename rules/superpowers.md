@@ -14,6 +14,7 @@ Superpowers' default output paths (`docs/superpowers/specs/`, `docs/superpowers/
   - `## Risks & migrations` — permissions/scopes, new secrets or env vars, behavior changes, backfills
   - `## Verification` — unit tests, e2e, manual smoke commands, production verification
 - **Implementation plan → `docs/plans/YYYY-MM-DD-<slug>.md`.** Keep the superpowers plan format (header for agentic workers, tasks with `- [ ]` checkbox steps); add a `**Spec:**` link to the ADR.
+- **Plans are local-only — don't commit them.** `docs/plans/` is excluded by the global `~/.gitignore`, deliberately: the committed historical record is the ADR; the plan is a working artifact. Don't force-add a plan past the ignore, and don't include `docs/plans` in `git add` during execution.
 - **ADR lifecycle:** ADRs are kept after implementation as the historical record. If a decision turns out wrong, don't rewrite the ADR — add a follow-up ADR that supersedes it.
 
 ## Commit strategy
