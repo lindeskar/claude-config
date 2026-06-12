@@ -54,7 +54,10 @@
       "Bash(git remote get-url *)",
       "Bash(git status *)",
       "Bash(git status)",
+      "Bash(go build *)",
       "Bash(go get *)",
+      "Bash(go vet *)",
+      "Bash(gofmt -l *)",
       "Bash(grep *)",
       "Bash(head *)",
       "Bash(helm lint *)",
@@ -71,6 +74,12 @@
       "Bash(sed *)",
       "Bash(tail *)",
       "Bash(terraform fmt *)",
+      "Bash(terraform validate *)",
+      "Bash(terraform version)",
+      "Bash(tofu fmt *)",
+      "Bash(tofu providers schema *)",
+      "Bash(tofu validate *)",
+      "Bash(tofu version)",
       "Bash(uv sync:*)",
       "Bash(wt *)",
       "mcp__claude_ai_Grafana__generate_deeplink",
@@ -231,6 +240,12 @@
       "docker *",
       "helm *"
     ]
+  },
+  "env": {
+    "UV_CACHE_DIR": "/tmp/claude/uv-cache",
+    "GOCACHE": "/tmp/claude/go-build",
+    "XDG_CACHE_HOME": "/tmp/claude/xdg-cache",
+    "npm_config_cache": "/tmp/claude/npm-cache"
   },
   "effortLevel": "high",
   "theme": "auto",
