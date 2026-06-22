@@ -26,11 +26,12 @@ When saving a memory, always consider scope: if it would be useful in a differen
 
 **Memory routing.** When the task is work-related (by trigger above), project-scoped memory writes go to `~/Code/_private/work/wiki/memory/` instead of `~/.claude/projects/<project>/memory/`. The auto-memory rules otherwise behave as normal (file shape, MEMORY.md index, global vs. project split).
 
-**Two work knowledge stores — private vs team.** There are now two places work knowledge can live:
+**Private vs team — write heuristic.** Two of the registered wikis (see **Knowledge wikis** below) hold work knowledge: `my-work` (private, yours alone — operational memory, half-formed findings, "how *I* verify X") and `platform-team` (shared platform-team reference, reviewed via PR). One test: *would a teammate benefit, and is it correct and durable?* → `platform-team` (PR). *Just for me / not yet proven / operational memory?* → `my-work`. The private wiki is the staging ground — promote matured notes to the team wiki via PR (re-expressed cleanly), and never reference the private wiki or any `lindeskar/*` repo from a company repo.
 
-- **Private work wiki** (`~/Code/_private/work/wiki/`) — yours alone. Operational memory, half-formed findings, "how *I* verify X", anything not yet team-ready. Written freely, direct commit.
-- **Team wiki** — `kognic-internal/devplat`, `docs/wiki/` (locally `~/Code/_kognic/devplat/docs/wiki/`), in Open Knowledge Format. Durable, correct reference knowledge the whole platform team benefits from. Changed via reviewed PR only. Operations: see `docs/wiki/README.md` in that repo.
+## Knowledge wikis
 
-**Write heuristic.** One test: *would a teammate benefit, and is it correct and durable?* → propose it to the team wiki (PR). *Just for me / not yet proven / operational memory?* → private work wiki.
+Registry for the `kognic-claude-wiki:knowledge-wiki` skill — it selects the wiki whose `use:` fits the task (asking if ambiguous), writes OKF-conformant pages, and commits per `write:`. If this list is empty the skill asks and adds an entry. One entry per line:
 
-**Promotion.** The private work wiki is the staging ground. When a note matures and generalizes, promote it into the team wiki via PR and trim the private entry to a pointer. Never reference the private wiki or any `lindeskar/*` repo from a company repo (PRs, commits, docs, comments) — promotion means re-expressing the knowledge cleanly, not linking back.
+- **platform-team** — `kognic-internal/devplat` · path `docs/wiki/` · write: pr · use: durable platform-team reference knowledge, shared with the team
+- **my-work** — `lindeskar/work` · path `wiki/` · write: direct · use: my private work memory, operational notes, half-formed findings
+- **personal** — `lindeskar/wiki` · path `.` · write: direct · use: personal non-work knowledge (cars, finance, home, civic)
