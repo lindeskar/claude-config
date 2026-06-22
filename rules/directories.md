@@ -1,7 +1,7 @@
 # ~/Code Directory Structure
 
 - `_forks/` — personal forks of public repos
-- `_kognic/` — repos from the `annotell` GitHub org, manually cloned when needed (Claude may clone here)
+- `_kognic/` — company repos from the `annotell` **and** `kognic-internal` GitHub orgs, manually cloned when needed (Claude may clone here)
 - `_kognic_terraform/` — all terraform repos from the `annotell` GitHub org; bulk clone/git operations managed by shell scripts (see its CLAUDE.md)
 - `_private/` — personal repos, manually cloned when needed (Claude may clone here)
 - `_public/` — public repos, manually cloned when needed (Claude may clone here)
@@ -11,7 +11,7 @@
 
 - Before using the GitHub API to browse a repo's contents, check if it's already cloned locally (e.g. `ls /Users/alex/Code/_kognic/<repo-name>`) — local reads are faster and don't burn API calls
 - Always use `gh repo clone` — never `git clone`: `gh repo clone annotell/kognic-pubsub-python`
-- Company repos (`annotell` org) go in `/Users/alex/Code/_kognic/`
+- Company repos (`annotell` and `kognic-internal` orgs) go in `/Users/alex/Code/_kognic/` (e.g. `kognic-internal/devplat`, `kognic-internal/claude-plugins`)
 
 ## Finding repos, libraries, and packages
 
