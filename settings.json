@@ -1,4 +1,10 @@
 {
+  "env": {
+    "UV_CACHE_DIR": "/tmp/claude/uv-cache",
+    "GOCACHE": "/tmp/claude/go-build",
+    "XDG_CACHE_HOME": "/tmp/claude/xdg-cache",
+    "npm_config_cache": "/tmp/claude/npm-cache"
+  },
   "permissions": {
     "allow": [
       "Bash(awk *)",
@@ -240,12 +246,6 @@
       "docker *",
       "helm *"
     ]
-  },
-  "env": {
-    "UV_CACHE_DIR": "/tmp/claude/uv-cache",
-    "GOCACHE": "/tmp/claude/go-build",
-    "XDG_CACHE_HOME": "/tmp/claude/xdg-cache",
-    "npm_config_cache": "/tmp/claude/npm-cache"
   },
   "effortLevel": "high",
   "theme": "auto",
