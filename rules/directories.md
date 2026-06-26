@@ -10,6 +10,7 @@
 ## Accessing other repos
 
 - Before using the GitHub API to browse a repo's contents, check if it's already cloned locally (e.g. `ls /Users/alex/Code/_kognic/<repo-name>`) — local reads are faster and don't burn API calls
+- **Refresh a local clone before reasoning about its *current* state — especially before asserting what a repo does or doesn't contain.** A working tree drifts behind `origin` between sessions, so reading it stale can produce a confidently wrong claim. `git fetch` + `git pull --ff-only` the default branch (or read `origin/<default>:<path>` if it isn't checked out / is dirty) first. (Learned asserting "the GPU nodepool isn't in terraform at all" from a `terraform-devplat-comp-volcano` working tree that was several commits behind `origin/master`; the nodepool had been added in three merged PRs — the user corrected me.)
 - Always use `gh repo clone` — never `git clone`: `gh repo clone annotell/kognic-pubsub-python`
 - Company repos (`annotell` and `kognic-internal` orgs) go in `/Users/alex/Code/_kognic/` (e.g. `kognic-internal/devplat`, `kognic-internal/claude-plugins`)
 
