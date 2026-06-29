@@ -2,6 +2,7 @@
   "env": {
     "UV_CACHE_DIR": "/tmp/claude/uv-cache",
     "GOCACHE": "/tmp/claude/go-build",
+    "GOLANGCI_LINT_CACHE": "/tmp/claude/golangci-cache",
     "XDG_CACHE_HOME": "/tmp/claude/xdg-cache",
     "npm_config_cache": "/tmp/claude/npm-cache"
   },
