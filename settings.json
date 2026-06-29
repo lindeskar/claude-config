@@ -189,7 +189,8 @@
     "kognic-claude-toolkit@kognic-claude-plugins": true,
     "cloudflare@cloudflare": true,
     "kognic-brand@kognic-claude-plugins": true,
-    "kognic-slides@kognic-claude-plugins": true
+    "kognic-slides@kognic-claude-plugins": true,
+    "kognic-claude-wiki@kognic-claude-plugins": true
   },
   "extraKnownMarketplaces": {
     "kognic-claude-plugins": {
