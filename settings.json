@@ -174,39 +174,39 @@
     "command": "wt list statusline --format=claude-code"
   },
   "enabledPlugins": {
-    "anthropic-review-pr@kognic-claude-plugins": true,
     "gopls-lsp@claude-plugins-official": true,
-    "kognic-code-quality@kognic-claude-plugins": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "worktrunk@worktrunk": true,
+    "cloudflare@cloudflare": false,
+    "anthropic-review-pr@kognic-claude-plugins": true,
+    "kognic-claude-toolkit@kognic-claude-plugins": true,
+    "kognic-claude-wiki@kognic-claude-plugins": true,
+    "kognic-code-quality@kognic-claude-plugins": false,
     "kognic-company-info@kognic-claude-plugins": true,
+    "kognic-design-guidelines@kognic-claude-plugins": false,
     "kognic-devops@kognic-claude-plugins": true,
     "kognic-devplat@kognic-claude-plugins": true,
     "kognic-git@kognic-claude-plugins": true,
     "kognic-golang@kognic-claude-plugins": true,
     "kognic-platform@kognic-claude-plugins": true,
     "kognic-python@kognic-claude-plugins": true,
-    "pyright-lsp@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
-    "worktrunk@worktrunk": true,
-    "kognic-claude-toolkit@kognic-claude-plugins": true,
-    "cloudflare@cloudflare": true,
-    "kognic-brand@kognic-claude-plugins": true,
-    "kognic-slides@kognic-claude-plugins": true,
-    "kognic-claude-wiki@kognic-claude-plugins": true
+    "kognic-slides@kognic-claude-plugins": false,
+    "kognic-static-reports@kognic-claude-plugins": false
   },
   "extraKnownMarketplaces": {
-    "kognic-claude-plugins": {
-      "source": {
-        "source": "github",
-        "repo": "kognic-internal/claude-plugins"
-      },
-      "autoUpdate": true
-    },
     "cloudflare": {
       "source": {
         "source": "github",
         "repo": "cloudflare/skills"
       },
       "autoUpdate": true
+    },
+    "kognic-claude-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "kognic-internal/claude-plugins"
+      }
     }
   },
   "sandbox": {
@@ -252,5 +252,6 @@
   "effortLevel": "high",
   "theme": "auto",
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": false
+  "voiceEnabled": false,
+  "model": "opus[1m]"
 }
