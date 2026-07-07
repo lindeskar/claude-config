@@ -125,6 +125,7 @@
       "Skill(superpowers:brainstorming)",
       "Skill(superpowers:subagent-driven-development)",
       "WebFetch(domain:agentgateway.dev)",
+      "WebFetch(domain:api.github.com)",
       "WebFetch(domain:app.kognic.com)",
       "WebFetch(domain:developers.google.com)",
       "WebFetch(domain:docs.anthropic.com)",
@@ -132,8 +133,10 @@
       "WebFetch(domain:docs.cloud.google.com)",
       "WebFetch(domain:docs.github.com)",
       "WebFetch(domain:gateway.envoyproxy.io)",
+      "WebFetch(domain:ghcr.io)",
       "WebFetch(domain:gist.github.com)",
       "WebFetch(domain:github.blog)",
+      "WebFetch(domain:github.com)",
       "WebFetch(domain:google.github.io)",
       "WebFetch(domain:grafana.com)",
       "WebFetch(domain:kognic.com)",
@@ -142,6 +145,8 @@
       "WebFetch(domain:modelcontextprotocol.github.io)",
       "WebFetch(domain:modelcontextprotocol.io)",
       "WebFetch(domain:o11y.kognic.io)",
+      "WebFetch(domain:pkg-containers.githubusercontent.com)",
+      "WebFetch(domain:results-receiver.actions.githubusercontent.com)",
       "WebFetch(domain:spec.modelcontextprotocol.io)",
       "WebFetch(domain:staging.kognic.com)",
       "WebFetch(domain:staging.kognic.io)",
@@ -169,6 +174,7 @@
       "/Users/alex/.claude/memory"
     ]
   },
+  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "wt list statusline --format=claude-code"
@@ -215,6 +221,7 @@
     "network": {
       "allowedDomains": [
         "*.googleapis.com",
+        "agentgateway.dev",
         "api.github.com",
         "app.kognic.com",
         "developers.google.com",
@@ -222,20 +229,29 @@
         "docs.claude.com",
         "docs.cloud.google.com",
         "docs.github.com",
+        "gateway.envoyproxy.io",
         "ghcr.io",
+        "gist.github.com",
         "github.blog",
         "github.com",
+        "google.github.io",
         "grafana.com",
         "kognic.com",
         "kognic.io",
         "kognic.net",
+        "modelcontextprotocol.github.io",
+        "modelcontextprotocol.io",
         "o11y.kognic.io",
         "pkg-containers.githubusercontent.com",
         "results-receiver.actions.githubusercontent.com",
+        "spec.modelcontextprotocol.io",
         "staging.kognic.com",
         "staging.kognic.io",
         "support.claude.com",
-        "www.humanlayer.dev"
+        "workspaceupdates.googleblog.com",
+        "www.humanlayer.dev",
+        "www.kognic.com",
+        "www.openpolicyagent.org"
       ],
       "allowUnixSockets": [
         "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
@@ -252,6 +268,5 @@
   "effortLevel": "high",
   "theme": "auto",
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": false,
-  "model": "opus[1m]"
+  "voiceEnabled": false
 }
