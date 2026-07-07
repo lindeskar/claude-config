@@ -38,8 +38,9 @@ unlink: ## Remove symlinks (only if they point into this repo)
 relink: unlink link ## Recreate all symlinks
 
 # Byte budget for always-loaded context (rules/*.md + global-CLAUDE.md).
-# ~40 KB ≈ 10k tokens; raise deliberately, don't let it creep.
-RULES_BUDGET_BYTES := 40000
+# Baseline after the 2026-07 diet: ~40 KB (~10k tokens). The budget leaves
+# room for new one-line rules; raise deliberately, don't let it creep.
+RULES_BUDGET_BYTES := 44000
 
 lint: ## Validate settings.json and detect drift
 	@jq empty settings.json && echo "✓ settings.json is valid JSON"

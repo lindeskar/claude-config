@@ -18,7 +18,7 @@
 
 ## Pull requests
 
-- Always create PRs in draft mode with a description: `gh pr create --draft --title "..." --body "..."`
+- Always create PRs in draft mode with a description: `gh pr create --draft --title "..." --body "..."` — no exceptions, even throwaway/test PRs (a ready PR fires CODEOWNERS review-requests and notifies colleagues before CI finishes)
 - **Set the final, valid Conventional-Commit title when you *create* the PR — never placeholder-then-rename.** The `annotell` org's "Validate PR title" ruleset checks only the `opened` event and does not re-run on rename, so a placeholder's failure sticks until a new commit or reopen. For titles containing `!` (which `gh pr create --title` mangles), set the title at creation via the API from a Write-created file — see `tooling.md`.
 - Add the `autoreview` label to PRs that only touch staging environments in `kognic-cd`, `k8s-platform-gitops`, or `k8s-platform-gitops-volcano` (`--label autoreview`). Never on PRs touching prod paths.
 - **When posting a code review as a PR comment**, wrap the body in a collapsible `<details><summary>Code review results</summary>` … `</details>` block (blank line after `<summary>` and before `</details>` so the markdown renders). Keep any `` `/anthropic-review-pr:review-pr` output: `` marker line *above* the `<details>`. Write the body with **Write** (reviews routinely contain `!`) and post with `gh pr comment <n> --repo <owner>/<repo> --body-file <path>`.

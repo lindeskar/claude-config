@@ -14,7 +14,7 @@
 - `$TMPDIR` resolves to a *different directory* in sandboxed vs non-sandboxed Bash calls. When a temp file must cross calls with different sandbox settings, note the absolute path from the first call's output and use it verbatim in the next.
 - **golangci-lint can report a false clean** when its cache write is blocked (macOS ignores `XDG_CACHE_HOME`; fact-based linters under-report silently). The tells: `persist facts`/`pkgcache` `operation not permitted` warnings, or nonzero exit with `0 issues.`. Re-run with a writable `GOLANGCI_LINT_CACHE=/tmp/claude/golangci-cache` before trusting the result.
 - `terraform`/`tofu` commands that launch a provider (`test`, `plan`, `apply`, `providers schema`) fail in-sandbox with `Unrecognized remote plugin message` — not a cache issue. `init` works sandboxed; run provider-launching commands with the sandbox off.
-- A test that fails only under the sandbox but passes with it disabled almost always has a hidden external-network dependency — *not* a code regression, even next to recently-changed code. Diagnose: re-run sandbox-off, grep the failing test for real hostnames. Fix by making the test hermetic (route its client at the local `httptest` server), not by touching product code.
+- A test that fails only under the sandbox but passes with it disabled almost always has a hidden external-network dependency — *not* a code regression, even next to recently-changed code. It can present as a plain assertion mismatch (nil/empty result), not a permission error; CI-green-but-local-red is the tell. Diagnose: re-run sandbox-off, grep the failing test for real hostnames. Fix by making the test hermetic (route its client at the local `httptest` server), not by touching product code.
 
 ## Terraform / OpenTofu
 
