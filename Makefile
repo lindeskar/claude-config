@@ -37,8 +37,20 @@ unlink: ## Remove symlinks (only if they point into this repo)
 
 relink: unlink link ## Recreate all symlinks
 
+# Byte budget for always-loaded context (rules/*.md + global-CLAUDE.md).
+# Baseline after the 2026-07 diet: ~40 KB (~10k tokens). The budget leaves
+# room for new one-line rules; raise deliberately, don't let it creep.
+RULES_BUDGET_BYTES := 44000
+
 lint: ## Validate settings.json and detect drift
 	@jq empty settings.json && echo "✓ settings.json is valid JSON"
+	@total=$$(cat rules/*.md global-CLAUDE.md | wc -c | tr -d ' '); \
+		if [ "$$total" -gt "$(RULES_BUDGET_BYTES)" ]; then \
+			echo "error: always-loaded context is $$total bytes (budget $(RULES_BUDGET_BYTES))" >&2; \
+			echo "  slim the rules or move war stories to reference/ or the work wiki" >&2; \
+			exit 1; \
+		fi; \
+		echo "✓ always-loaded context: $$total bytes (budget $(RULES_BUDGET_BYTES))"
 	@dupes=$$(jq -r '.permissions.allow[]' settings.json | sort | uniq -d); \
 		if [ -n "$$dupes" ]; then \
 			echo "error: duplicate permissions:" >&2; \
