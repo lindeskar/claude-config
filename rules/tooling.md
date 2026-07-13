@@ -45,6 +45,7 @@
 - When a request says "all uses" / "everywhere" / a plural or glob, enumerate the full match set first (Grep across the dir glob) and reflect the scope back ("that's N refs across M dirs, all of them?") before editing.
 - When telling the user the exact invocation of an unfamiliar CLI, verify its flag-passing convention (`--flag=value` vs `--flag value`) against `--help`/docs/source first — many vendor CLIs (e.g. Volcengine `ve`) only accept space-separated values.
 - When wiring dynamic credential fetching (AWS `credential_process`, `op run`, assume-role helpers), check the higher-precedence credential sources *first* — a leftover static entry (e.g. a `[profile]` block in `~/.aws/credentials`) silently wins and the helper never runs.
+- When a build/render/lint **passes locally but fails in CI** (or vice-versa), suspect a **pinned-tool-version difference before the code** — find the exact version CI vendors (Makefile `*_VERSION`, action `with: version:`, `.tool-versions`, a `.bin/` dir on `PATH`) and reproduce with *that* binary, not your local install. Same-tool behaviour drifts across versions: helm's JSON-schema validator rejects present-but-null values in 3.21+ but coalesces them away in ≤3.16 and helm 4, so a chart render passed on local helm and failed CI until reproduced with the CI-pinned helm 3.21.2 (burned ~3 wrong-version cycles first). This is the reactive twin of the Terraform-section rule above ("check the version the CI actually pins"). Case: work wiki `reference_k8s-gitops-ci-helm321-render`.
 
 ## GitHub API
 
