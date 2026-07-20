@@ -16,9 +16,9 @@ After `gh issue create` returns the issue URL:
      --jq 'any(.[]; .property_name=="team" and (.value | (type=="array" and index("plateng")) or .=="plateng"))'
    ```
    The `team` property is a multi-select, so its value is an array (e.g. `["plateng"]`) — match membership, not equality.
-2. If it returns `true`, add the issue to the project:
+2. If it returns `true`, add the issue to the project (use `--format json` — it returns the new item `id`, confirming the add; don't verify with `item-list`, which truncates at 30 items — see `tooling.md` GitHub API):
    ```
-   gh project item-add 23 --owner annotell --url <issue-url>
+   gh project item-add 23 --owner annotell --url <issue-url> --format json
    ```
 3. If it returns `false` (or `team` is unset), do nothing — leave the issue off the project.
 
