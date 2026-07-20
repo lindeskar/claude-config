@@ -2,6 +2,10 @@
 
 When creating a GitHub issue in a repo in the `annotell` org, automatically add it to the **Platform Engineering** project (org project number `23`, node ID `PVT_kwDOAfrIOc4Acn_s`) — but only if the repo's `team` custom property contains `plateng`.
 
+## "Add a team issue" → `kognic-internal/devplat`
+
+When the user says "add a team issue" (or "team issue"), create it in **`kognic-internal/devplat`** — the platform team's tracking repo — not in whatever repo the change lives in. Use full GitHub URLs for cross-repo refs in the body (a bare `#NNN` won't autolink from devplat to another repo), and link the issue from any related PR with the plain full devplat URL. The PlatEng-project auto-add below is `annotell`-org-scoped and does **not** apply to `kognic-internal/devplat`.
+
 ## Procedure
 
 After `gh issue create` returns the issue URL:
