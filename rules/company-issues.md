@@ -27,3 +27,9 @@ After `gh issue create` returns the issue URL:
 - This only fires for issues *I* create during a session — it does not catch issues opened by others in the GitHub UI. For org-wide coverage a GitHub Actions workflow would be needed (deferred).
 - Don't add issues from non-`plateng` repos to the project, even if asked to create the issue — surface the skipped add rather than silently forcing it.
 - Applies to the `annotell` org only. Personal-repo issue tracking (`lindeskar/work`) is handled separately in `personal-issues.md`.
+
+## Issue structure — writing and maintaining
+
+- **Description = stable problem statement + suggested fixes.** It should not change considerably over time — don't fold outcomes, changelogs, or PR lists into it.
+- **Findings, status updates, and conclusions go in comments** — and keep them few and tight: prefer one consolidated conclusion comment (chosen fix, outcome, key learnings, PR links) over many overlapping verbose comments.
+- When wrapping up, add/update a single conclusion comment rather than rewriting the description; consolidate or delete redundant interim comments instead of letting them pile up. (Evidence: `kognic-internal/devplat#652` accreted many same-topic comments plus an over-long, mutating description before this was fixed.)
