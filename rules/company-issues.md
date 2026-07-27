@@ -30,6 +30,6 @@ After `gh issue create` returns the issue URL:
 
 ## Issue structure — writing and maintaining
 
-- **Description = stable problem statement + suggested fixes.** It should not change considerably over time — don't fold outcomes, changelogs, or PR lists into it.
-- **Findings, status updates, and conclusions go in comments** — and keep them few and tight: prefer one consolidated conclusion comment (chosen fix, outcome, key learnings, PR links) over many overlapping verbose comments.
+- **Description = the stable problem statement only** — the need/why, plus any durable requirement or constraint (e.g. "remove the VM when the POC is done"). It should not change considerably over time — don't fold outcomes, changelogs, or PR lists into it. **The chosen solution / implementation does NOT go in the body** — even at creation time, put it in a comment (see next bullet). When you create an issue for work you're already doing, the body is the problem and the *first comment* is your proposed/implemented solution. (Pattern confirmed on `kognic-internal/devplat#663`: body = problem + "remove when done" constraint; solution + PR link moved to a comment.)
+- **Solution, findings, status updates, and conclusions go in comments** — and keep them few and tight: prefer one consolidated comment (chosen approach, PR links, outcome, key learnings) over many overlapping verbose comments.
 - When wrapping up, add/update a single conclusion comment rather than rewriting the description; consolidate or delete redundant interim comments instead of letting them pile up. (Evidence: `kognic-internal/devplat#652` accreted many same-topic comments plus an over-long, mutating description before this was fixed.)
