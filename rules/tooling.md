@@ -41,6 +41,7 @@
 
 ## Verification & investigation
 
+- **To inspect or validate YAML/JSON from Bash, reach for `yq` (installed at `/opt/homebrew/bin/yq`) — not a Python one-liner.** The system `python3` has **no `pyyaml`**, and `uv run --no-project --with pyyaml python -c 'import yaml…'` also failed with `ModuleNotFoundError` (both sandboxed and not), so the Python route burns calls before working. `yq '.jobs.x.steps[] | select(.id=="auth")' file.yaml` both proves the file parses and projects the field you want to check.
 - Use LSP diagnostics and go-to-definition to understand and troubleshoot code — don't guess at types, imports, or call sites by grepping. When investigating errors: LSP/compiler output first, then read the relevant source — don't shotgun-grep.
 - Before asserting a tool or system **can't**/**won't** do something — especially into long-term memory or as fact to the user — verify against a concrete artifact (a real PR, CI run, log line, command output). Confident negatives extrapolated from related notes are how wrong "facts" get recorded.
 - A deployed change with **no observable effect** is a signal to find out *why it's inert* (config precedence, higher-priority layer, wrong scope, stale cache, not loaded) — not a cue to try the same setting elsewhere. Verify the **effective/resolved value** the process actually used, then read the source/issue tracker for the override mechanism before re-placing. Case study: work wiki `renovate-ce-config-precedence`.
