@@ -22,6 +22,7 @@ After creating a worktree, immediately `cd` into it as a **standalone Bash call*
 
 - The Edit tool's read-before-edit check is per absolute path: having Read a file in the main checkout does not allow editing it in the worktree — Read it again at the worktree path.
 - To inspect another branch's files, prefer read-only access (`git show <ref>:<path>`, `git diff <a> <b> -- <path>`) over `cd`-ing out. If you must `cd` out, `cd` back *before* any write op — especially `git checkout <branch> -- <files>`, which modifies whichever tree you're standing in.
+- **A `cd` detour also silently invalidates the next *verification* command, and there the failure mode is a false pass.** After `cd`-ing somewhere to read a file (a vendored module under `.terraform/modules/`, a sibling repo), a following `terraform fmt -check .` / `validate` / `make lint` runs against *that* directory and can report clean while your actual edits go unchecked. Prefer the **Read** tool with an absolute path — it needs no `cd` at all. If you did `cd`, `pwd` as part of the same call that runs the check, and treat an unexpected "clean" or an unrelated error message (`This module is not yet installed`) as a cwd tell.
 
 ## Built-in alternative
 
