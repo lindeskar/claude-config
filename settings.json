@@ -162,6 +162,7 @@
       "Bash(git push * -f)",
       "Bash(git push *--force*)"
     ],
+    "defaultMode": "auto",
     "additionalDirectories": [
       "/Users/alex/go/pkg",
       "/Users/alex/Code/_kognic",
@@ -266,7 +267,9 @@
     ]
   },
   "effortLevel": "high",
+  "askUserQuestionTimeout": "never",
   "theme": "auto",
+  "editorMode": "normal",
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": false
 }
