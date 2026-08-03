@@ -268,6 +268,7 @@
   },
   "effortLevel": "high",
   "askUserQuestionTimeout": "never",
+  "tui": "fullscreen",
   "theme": "auto",
   "editorMode": "normal",
   "skipAutoPermissionPrompt": true,
