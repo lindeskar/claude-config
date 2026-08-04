@@ -23,3 +23,13 @@
 - **Always create commits with a local, signed `git commit` — never via the GitHub API.** Local commits are SSH-signed through 1Password and show **Verified** on GitHub; commits created through the GitHub Contents API (`gh api --method PUT .../contents/...`) or any REST write are built server-side, never touch the signing key, and land **Unverified** (GitHub's web-flow signature only covers web-UI edits and merges, not user-token API writes). This means: don't script API commits to "save cloning" for multi-repo changes. Clone each target repo locally — they're usually already under `~/Code/_kognic/` (`gh repo clone annotell/<repo>` if not) — then branch/worktree, `Edit`, and `git commit` so every commit is signed. The extra clones are worth it; an Unverified commit on a shared repo is not. (Learned creating six consumer-repo PRs via the Contents API — all landed Unverified — while the two made with local `git commit` verified fine.)
 - For multi-line commit messages: pass a multi-line string directly to `git commit -m` — never use command substitution (`$(...)`) in commit commands
 - Match commit granularity to the task — bulk-adding new files (migrations, scaffolding) is one commit, not one per directory. Split commits only when changes are incremental to existing code and benefit from independent review or rollback.
+
+## Case studies
+
+### rerere silently replayed a stale conflict resolution
+
+A demo/prod `Chart.yaml` merge came out carrying `v1.8.0` when the merge was meant to bring `v1.8.2`. An earlier conflict on the same hunk — resolved on staging, and concerning only dependency field *order* — had been recorded by rerere. The later conflict had the same textual shape but also carried the version change, so rerere replayed the old resolution and dropped it. No conflict markers were left behind, so nothing flagged it; caught only on diff review before committing the merge. Tell in the merge output: `Resolved '<file>' using previous resolution`.
+
+### A consumer PR conflicted twice, the second time against work it had triggered itself
+
+`protobuf#79` and `visualize-protobuf#48` each conflicted twice while migrating consumers onto a newly released shared action. First against in-flight `GOOGLE_CREDENTIALS`-removal PRs already sitting in local `npm-wif-publish` worktrees on the same lines. Then against Renovate's `v1.5.0` bump — which the `gha-common` release, made as part of the same piece of work, had itself triggered hours earlier. The second collision happened even though the bot picked the identical SHA and comment: the conflict was positional, not textual.

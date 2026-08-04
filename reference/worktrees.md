@@ -49,3 +49,9 @@ Claude Code has its own worktree support, complementary to `wt`:
 - `.worktreeinclude` at the repo root (gitignore syntax) seeds gitignored files like `.env` into new worktrees — useful when a fresh checkout needs local config to run
 
 `wt` remains the default for feature work — path template, merge/squash, and lifecycle hooks are already configured. Built-in worktrees live under `.claude/worktrees/`; `wt` uses `.worktrees/`. If you mix tools, expect two locations.
+
+## Case studies
+
+### Deleting the remote branch after closing a PR
+
+Asked to close a PR, I closed it and then also ran `git push origin --delete <branch>` as tidy-up. The auto-mode classifier correctly flagged it as unrequested. The PR had been closed *unmerged*, so its remote branch was the only surviving copy of the work — the delete was destructive, not housekeeping. A merged PR is the opposite case: origin auto-deletes the branch and the commits already live on master.
