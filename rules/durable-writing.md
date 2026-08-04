@@ -18,7 +18,7 @@ The insight is worth keeping; the incident that produced it is not. Restate it:
 Two that don't fit the table:
 
 - **Point at the authority, don't teach inference.** Name where the answer is documented — the repo's own instructions, the vendor's docs, `--help` — rather than a heuristic for guessing it from indirect signals.
-- **Keep it short.** A rule earns its place by changing behaviour. Length costs attention on every future load.
+- **Keep it short.** A rule earns its place by changing behaviour. Length costs attention on every future load. Surrounding verbosity is not a licence to match it — "the neighbouring entries are all long" is how a house style ratchets. State the decision and the one mechanism a reader can't infer; drop the argument for it.
 
 Where the story goes instead: `reference/<topic>.md` in `claude-config` (not auto-loaded) for tooling/git/worktree war stories, the work wiki for Kognic-specific ones, the tracking issue for work-log detail. Link it; never inline it.
 
