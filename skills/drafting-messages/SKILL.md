@@ -1,3 +1,13 @@
+---
+name: drafting-messages
+description: >-
+  Write Slack messages, emails, and announcements in the user's own voice — brief, colleague-to-colleague,
+  tentative rather than prescriptive. Use whenever drafting or rewriting a message to be sent to another
+  person or a channel, translating a draft between languages, or broadening a 1:1 message to a team or
+  org-wide audience. Covers tone, openers, hedging, emoji, audience-tuning, and what to preserve when
+  editing the user's own draft.
+---
+
 # Messaging Style
 
 When drafting messages on behalf of the user (Slack, email, etc.):

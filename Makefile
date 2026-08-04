@@ -4,6 +4,7 @@ CLAUDE_DIR := $(HOME)/.claude
 
 LINKS := \
 	$(CURDIR)/rules:$(CLAUDE_DIR)/rules \
+	$(CURDIR)/skills:$(CLAUDE_DIR)/skills \
 	$(CURDIR)/global-CLAUDE.md:$(CLAUDE_DIR)/CLAUDE.md \
 	$(CURDIR)/settings.json:$(CLAUDE_DIR)/settings.json
 
@@ -37,20 +38,31 @@ unlink: ## Remove symlinks (only if they point into this repo)
 
 relink: unlink link ## Recreate all symlinks
 
-# Byte budget for always-loaded context (rules/*.md + global-CLAUDE.md).
-# Baseline after the 2026-07 diet: ~40 KB (~10k tokens). The budget leaves
-# room for new one-line rules; raise deliberately, don't let it creep.
+# Byte budget for always-loaded context: global-CLAUDE.md plus every rules/*.md
+# that has no `paths:` frontmatter. Path-scoped rules load only when Claude reads
+# a matching file, so they are measured but not budgeted. Raise deliberately.
 RULES_BUDGET_BYTES := 44000
 
 lint: ## Validate settings.json and detect drift
 	@jq empty settings.json && echo "✓ settings.json is valid JSON"
-	@total=$$(cat rules/*.md global-CLAUDE.md | wc -c | tr -d ' '); \
+	@always=""; scoped=""; \
+		for f in global-CLAUDE.md rules/*.md; do \
+			if head -n1 "$$f" | grep -q '^---$$' && awk 'NR>1 && /^---$$/{exit} NR>1' "$$f" | grep -q '^paths:'; then \
+				scoped="$$scoped $$f"; \
+			else \
+				always="$$always $$f"; \
+			fi; \
+		done; \
+		total=$$(cat $$always | wc -c | tr -d ' '); \
+		nscoped=$$(echo $$scoped | wc -w | tr -d ' '); \
+		scopedbytes=$$([ -n "$$scoped" ] && cat $$scoped | wc -c | tr -d ' ' || echo 0); \
 		if [ "$$total" -gt "$(RULES_BUDGET_BYTES)" ]; then \
 			echo "error: always-loaded context is $$total bytes (budget $(RULES_BUDGET_BYTES))" >&2; \
-			echo "  slim the rules or move war stories to reference/ or the work wiki" >&2; \
+			echo "  slim the rules, add paths: frontmatter, or move detail to reference/, a skill, or the work wiki" >&2; \
 			exit 1; \
 		fi; \
-		echo "✓ always-loaded context: $$total bytes (budget $(RULES_BUDGET_BYTES))"
+		echo "✓ always-loaded context: $$total bytes (budget $(RULES_BUDGET_BYTES))"; \
+		echo "  ($$nscoped path-scoped rule(s), $$scopedbytes bytes, excluded)"
 	@dupes=$$(jq -r '.permissions.allow[]' settings.json | sort | uniq -d); \
 		if [ -n "$$dupes" ]; then \
 			echo "error: duplicate permissions:" >&2; \

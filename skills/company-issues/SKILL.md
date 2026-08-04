@@ -1,3 +1,13 @@
+---
+name: company-issues
+description: >-
+  Create and maintain GitHub issues in the annotell and kognic-internal orgs, including auto-adding
+  them to the Platform Engineering project. Use when creating a company GitHub issue, when the user
+  says "add a team issue", or when structuring an issue body, adding findings or status as comments,
+  or wrapping one up with a conclusion. Covers the plateng team-property gate, the devplat tracking
+  repo, and problem-statement-vs-comments structure.
+---
+
 # Company GitHub Issues — Platform Engineering project
 
 When creating a GitHub issue in a repo in the `annotell` org, automatically add it to the **Platform Engineering** project (org project number `23`, node ID `PVT_kwDOAfrIOc4Acn_s`) — but only if the repo's `team` custom property contains `plateng`.

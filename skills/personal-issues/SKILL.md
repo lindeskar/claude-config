@@ -1,3 +1,12 @@
+---
+name: personal-issues
+description: >-
+  Track personal work using GitHub Issues in the private lindeskar/work repo. Use when creating,
+  browsing, updating, or closing a personal todo issue, adding a sub-issue, setting project status,
+  or cross-linking a company PR back to a personal issue. Covers the one-directional cross-linking
+  rule (personal issues may reference company PRs, never the reverse) and the sub-issue REST API.
+---
+
 # Personal GitHub Issues Tracking
 
 The repo `lindeskar/work` uses GitHub Issues as a personal todo list.
