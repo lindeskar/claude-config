@@ -162,6 +162,10 @@
       "Bash(git push * -f)",
       "Bash(git push *--force*)"
     ],
+    "ask": [
+      "Bash(gh pr ready)",
+      "Bash(gh pr ready *)"
+    ],
     "defaultMode": "auto",
     "additionalDirectories": [
       "/Users/alex/go/pkg",
@@ -175,7 +179,9 @@
       "/Users/alex/.claude/memory"
     ]
   },
-  "model": "opus[1m]",
+  "worktree": {
+    "baseRef": "fresh"
+  },
   "statusLine": {
     "type": "command",
     "command": "wt list statusline --format=claude-code"
