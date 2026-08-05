@@ -14,6 +14,15 @@ description: >-
 - **GKE contexts fail under the sandbox when the token needs refreshing**: `gke-gcloud-auth-plugin` can't write its cache under `~/.config/gcloud` (sandbox-denied), so kubectl dies with `getting credentials: exec: … gke-gcloud-auth-plugin failed`. Early calls may work off a cached token, then break mid-session. Run kubectl against GKE with the sandbox **off**; read-only gets and describes are safe that way.
 - Helm: read chart values with `helm show values`.
 
+## Rendering a gitops wrapper chart locally
+
+Rendering an `infra/<app>/<env>` wrapper chart is the cheapest way to prove a values change does what you think — and to prove your check *discriminates*.
+
+- **`helm dependency update` aborts on a stale shared repo cache even when every dependency is OCI**: `Error: open …/helm/repository/<repo>-index.yaml: no such file or directory`, naming a repo the chart never referenced. Sidestep the cache instead of repairing it — point `HELM_REPOSITORY_CONFIG` at a file containing `repositories: null`. OCI refs don't consult it.
+- **Verify the rendered result both ways.** Assert what should now be absent, then re-render with the old value (`--set`) and confirm it comes back. An empty result is also what a broken render produces, so the negative alone proves nothing.
+- Render from the chart dir the repo actually pins — re-read `Chart.yaml` *after* refreshing the clone, since a Renovate bump may have moved the dependency version out from under the templates you read.
+- Clean up `charts/` and `Chart.lock` afterwards; they're gitignored, so `git status` won't remind you.
+
 ## Reading and testing config inside images
 
 - **To read a file out of a distroless image**, use `crane export <image@digest> - | tar -xO <path>` — distroless has no shell or coreutils, so `kubectl exec … cat` fails with `executable file not found`.
