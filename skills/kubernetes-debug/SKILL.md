@@ -13,6 +13,13 @@ description: >-
 - **`kubectl` is aliased to `kubecolor`**, which injects ANSI colour codes even into `-o json`/`-o yaml` — piping to `python`/`jq` fails with `Invalid control character`/`JSONDecodeError`. For machine-readable output prefix `NO_COLOR=1` (`NO_COLOR=1 kubectl … -o json` pipes cleanly), or call the real binary at `/opt/homebrew/bin/kubectl`.
 - **GKE contexts fail under the sandbox when the token needs refreshing**: `gke-gcloud-auth-plugin` can't write its cache under `~/.config/gcloud` (sandbox-denied), so kubectl dies with `getting credentials: exec: … gke-gcloud-auth-plugin failed`. Early calls may work off a cached token, then break mid-session. Run kubectl against GKE with the sandbox **off**; read-only gets and describes are safe that way.
 - Helm: read chart values with `helm show values`.
+- **The China `common` cluster is reachable by kubectl** as context `vke-common-pub`. `kognic-devplat:china-debug` covers `staging`/`demo`/`prod`/`common-comp`, which are not — check `kubectl config get-contexts` before falling back to its commit-a-script route or to Grafana metrics.
+
+## Server-side apply, webhooks and controllers
+
+- **A controller's SSA re-apply is invisible in the object while a mutating webhook rewrites it back.** Controllers like Envoy Gateway re-apply their desired spec continuously; if Kyverno (or any mutator) rewrites a field on each admission, the stored object never differs, so `resourceVersion`, `generation` and the manager's `managedFields` time all stay frozen. Stop the mutation and the very next apply persists — so this breakage surfaces seconds after the *mutator* stops, not when the config changed.
+- **`managedFields` `time` bumps only when that manager's owned *field set* changes, not on every apply.** An old timestamp means "this manager's ownership hasn't changed since then", never "nothing has applied since then".
+- **To find *when* a mutation stopped, read the mutating controller's log, not the object.** Kyverno's admission controller logs a line per mutated request (`mutation rules from policy applied successfully`, carrying `name=`, `operation=` and the requesting `username=`); the gap between its last line and the object's first unmutated write brackets the change to seconds.
 
 ## Rendering a gitops wrapper chart locally
 
