@@ -24,6 +24,7 @@
 - **A `git push` wrapped by another tool is sandbox-blocked even as a direct call** — `gh` extensions that shell out to git (`gh stack link`/`push`/`submit`) fail under the sandbox while a bare `git fetch` over SSH in the same repo succeeds, so a working fetch doesn't clear the wrapped push. Tell: `nc: authentication method negotiation failed` / `Connection closed by UNKNOWN port 65535` — a transport error, not a permission one. Re-run sandbox-off.
 - **Docker Desktop does not share `/tmp` — a `-v /tmp/claude/...:/src` mount is silently *empty*, not an error.** The tool then reports "nothing found" over an empty dir, which reads as a real result. Mount a path under `~/Code` instead, and prove a suspicious empty result with `docker run --rm -v "$PWD:/src" <img> ls -la /src`.
 - A test that fails only under the sandbox but passes with it off almost always has a hidden external-network dependency — *not* a code regression, even next to recently-changed code. It can present as a plain assertion mismatch, not a permission error; CI-green-but-local-red is the tell. Fix by making the test hermetic, not by touching product code.
+- **Go tests using `t.TempDir()` fail sandboxed with `TempDir: mkdir /tmp/…: operation not permitted`, and a `TMPDIR=` prefix doesn't redirect them.** That is the sandbox, not the change under test: re-run just the failing packages with the sandbox off.
 
 ## Bash tool discipline
 
