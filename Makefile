@@ -70,14 +70,14 @@ lint: ## Validate settings.json and detect drift
 			exit 1; \
 		fi; \
 		echo "✓ no duplicate permissions"
-	@webfetch=$$(jq -r '.permissions.allow[] | select(startswith("WebFetch(domain:")) | sub("WebFetch\\(domain:"; "") | sub("\\)"; "")' settings.json | sort -u); \
+	@webfetch=$$(jq -r '.permissions.allow[] | select(startswith("WebFetch(domain:")) | sub("WebFetch\\(domain:"; "") | sub("\\)"; "") | select(startswith("*") | not)' settings.json | sort -u); \
 		sandbox=$$(jq -r '.sandbox.network.allowedDomains[] | select(startswith("*") | not)' settings.json | sort -u); \
 		only_fetch=$$(comm -23 <(echo "$$webfetch") <(echo "$$sandbox")); \
 		only_sandbox=$$(comm -13 <(echo "$$webfetch") <(echo "$$sandbox")); \
 		if [ -n "$$only_fetch" ] || [ -n "$$only_sandbox" ]; then \
 			echo "warning: WebFetch and sandbox domain lists differ:" >&2; \
-			[ -n "$$only_fetch" ]   && echo "  in WebFetch only:"  >&2 && echo "$$only_fetch"   | sed 's/^/    /' >&2; \
-			[ -n "$$only_sandbox" ] && echo "  in sandbox only:"   >&2 && echo "$$only_sandbox" | sed 's/^/    /' >&2; \
+			if [ -n "$$only_fetch" ];   then echo "  in WebFetch only:" >&2; echo "$$only_fetch"   | sed 's/^/    /' >&2; fi; \
+			if [ -n "$$only_sandbox" ]; then echo "  in sandbox only:"  >&2; echo "$$only_sandbox" | sed 's/^/    /' >&2; fi; \
 		else \
 			echo "✓ WebFetch and sandbox domains agree"; \
 		fi
