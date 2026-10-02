@@ -19,7 +19,7 @@ description: >-
 
 ## China / volcano clusters
 
-Run `kubectl config get-contexts | grep -i vke` before assuming no access; some VKE clusters (e.g. `common`) are contexts, and this overrides `kognic-devplat:china-debug`. Use its commit-a-script route, or metrics (see ArgoCD below), only for clusters not in that list.
+Run `kubectl config get-contexts | grep -i vke` before assuming no access; VKE clusters with a context answer `kubectl` directly. For the rest, use `kognic-devplat:china-debug`'s commit-a-script route or metrics (see ArgoCD below).
 
 ## Workload triage
 
