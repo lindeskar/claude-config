@@ -1,42 +1,58 @@
 ---
 name: kubernetes-debug
 description: >-
-  Inspect Kubernetes, ArgoCD and Helm state on Kognic clusters, including clusters absent from
-  kubeconfig. Use when running kubectl, reading pod or deployment state, checking ArgoCD sync or
-  health, rendering or comparing Helm charts, or debugging GKE auth failures. Covers the kubecolor
-  JSON-parsing trap, GKE sandbox auth, ArgoCD inspection without the argocd CLI, and checking
-  China/volcano clusters via metrics.
+  Inspect and debug Kubernetes, ArgoCD and Helm state on Kognic clusters (GKE and China/volcano
+  VKE), including clusters absent from kubeconfig. Use when running kubectl, reading pod,
+  deployment, HPA or event state, a pod is slow to start or stuck in ContainerCreating, selecting
+  pods by label, checking ArgoCD sync or health, rendering or comparing Helm charts, reading config
+  out of a distroless image, or when someone says a China cluster is unreachable. Covers the
+  kubecolor JSON trap, Kognic pod labels, orphaned HPAs, fsGroup chown stalls, SSA/webhook
+  interplay, and ArgoCD inspection without the argocd CLI.
 ---
 
 # Kubernetes / kubectl
 
-- **`kubectl` is aliased to `kubecolor`**, which injects ANSI colour codes even into `-o json`/`-o yaml` — piping to `python`/`jq` fails with `Invalid control character`/`JSONDecodeError`. For machine-readable output prefix `NO_COLOR=1` (`NO_COLOR=1 kubectl … -o json` pipes cleanly), or call the real binary at `/opt/homebrew/bin/kubectl`.
-- **GKE contexts fail under the sandbox when the token needs refreshing**: `gke-gcloud-auth-plugin` can't write its cache under `~/.config/gcloud` (sandbox-denied), so kubectl dies with `getting credentials: exec: … gke-gcloud-auth-plugin failed`. Early calls may work off a cached token, then break mid-session. Run kubectl against GKE with the sandbox **off**; read-only gets and describes are safe that way.
+- **`kubectl` is aliased to `kubecolor`**, which injects ANSI codes even into `-o json`/`-o yaml`, so piping to `jq` fails with `Invalid control character`. Prefix `NO_COLOR=1`. Don't call `/opt/homebrew/bin/kubectl` by path: it matches neither the sandbox exclusion nor the ask rules for mutating verbs.
+- GKE auth runs outside the sandbox. If kubectl ever dies in `gke-gcloud-auth-plugin` with `getting credentials`, kubectl has slipped back into the sandbox; re-run it sandbox-off.
+- **Kognic pod labels are `app`, `team`, `language`, `helm.sh/chart=kognic-deployment`.** The kognic-deployment chart doesn't set the `app.kubernetes.io/*` labels, so `-l app.kubernetes.io/name=…` returns zero results on every cluster. Use `-l app=<name>` or `-l team=<team>`, and `.metadata.labels.app` in jsonpath.
 - Helm: read chart values with `helm show values`.
-- **The China `common` cluster is reachable by kubectl** as context `vke-common-pub`. `kognic-devplat:china-debug` covers `staging`/`demo`/`prod`/`common-comp`, which are not — check `kubectl config get-contexts` before falling back to its commit-a-script route or to Grafana metrics.
+
+## China / volcano clusters
+
+Run `kubectl config get-contexts | grep -i vke` before assuming no access; some VKE clusters (e.g. `common`) are contexts, and this overrides `kognic-devplat:china-debug`. Use its commit-a-script route, or metrics (see ArgoCD below), only for clusters not in that list.
+
+## Workload triage
+
+- **Pod stalls for minutes on every restart with `VolumePermissionChangeInProgress` events** (`Setting volume ownership … is taking longer than expected`): `securityContext.fsGroup` with the default `fsGroupChangePolicy: Always` makes kubelet recursively chown every file on the volume. Add `fsGroupChangePolicy: OnRootMismatch` next to `fsGroup`. Kubelet then checks only the volume root and skips the walk once ownership matches. With a Helm chart, confirm it renders `podSecurityContext` whole via `toYaml` so the new field reaches the pod.
+- **Orphaned HPAs** (target workload gone, `FailedGetScale … not found` forever). Ignore the `TARGETS` column: `<unknown>` there means the *metric* can't be read, which is routine for idle KEDA scalers and pods without requests. Take an exact set difference instead:
+  ```
+  kubectl get hpa -A -o jsonpath='{range .items[*]}{.metadata.namespace}/{.spec.scaleTargetRef.kind}/{.spec.scaleTargetRef.name}{"\n"}{end}' > /tmp/claude/hpa.txt
+  kubectl get deploy,statefulset -A -o jsonpath='{range .items[*]}{.metadata.namespace}/{.kind}/{.metadata.name}{"\n"}{end}' > /tmp/claude/wl.txt
+  grep -Fxv -f /tmp/claude/wl.txt /tmp/claude/hpa.txt
+  ```
+  Add a fake `ns/Kind/does-not-exist` line to prove it comes through, because a broken jsonpath also yields empty output. Corroborate with `kubectl get events -A --field-selector reason=FailedGetScale`. A live orphan re-emits about every 15s. After a fix the event's `LAST SEEN` freezes, and that is your confirmation. Before deleting, find the owner. A `keda-hpa-` prefix means a ScaledObject owns it, so fix that object. An `argocd.argoproj.io/tracking-id` annotation can outlive its Application, so resolve the `<appNamespace>_<appName>` part, which may be outside `argocd`, before concluding it's orphaned. If the app still exists, a manual delete just gets re-synced.
 
 ## Server-side apply, webhooks and controllers
 
-- **A controller's SSA re-apply is invisible in the object while a mutating webhook rewrites it back.** Controllers like Envoy Gateway re-apply their desired spec continuously; if Kyverno (or any mutator) rewrites a field on each admission, the stored object never differs, so `resourceVersion`, `generation` and the manager's `managedFields` time all stay frozen. Stop the mutation and the very next apply persists — so this breakage surfaces seconds after the *mutator* stops, not when the config changed.
-- **`managedFields` `time` bumps only when that manager's owned *field set* changes, not on every apply.** An old timestamp means "this manager's ownership hasn't changed since then", never "nothing has applied since then".
-- **To find *when* a mutation stopped, read the mutating controller's log, not the object.** Kyverno's admission controller logs a line per mutated request (`mutation rules from policy applied successfully`, carrying `name=`, `operation=` and the requesting `username=`); the gap between its last line and the object's first unmutated write brackets the change to seconds.
+- **A controller's SSA re-apply is invisible while a mutating webhook rewrites it back.** If Kyverno or another mutator rewrites a field on every admission, the stored object never differs, so `resourceVersion`, `generation` and the manager's `managedFields` time all stay frozen. The next apply after the mutation stops persists, so breakage shows up seconds after the *mutator* changes, not when the config changed.
+- **`managedFields` `time` bumps only when that manager's owned field set changes.** An old timestamp means ownership hasn't changed. It doesn't mean nothing has applied since.
+- **To find when a mutation stopped, read the mutator's log, not the object.** Kyverno logs `mutation rules from policy applied successfully` with `name=`, `operation=` and `username=` for each request. The gap between its last line and the first unmutated write pins the change to within seconds.
 
 ## Rendering a gitops wrapper chart locally
 
-Rendering an `infra/<app>/<env>` wrapper chart is the cheapest way to prove a values change does what you think — and to prove your check *discriminates*.
+Rendering an `infra/<app>/<env>` wrapper chart is the cheapest way to prove a values change does what you think, and to prove your check discriminates.
 
-- **`helm dependency update` aborts on a stale shared repo cache even when every dependency is OCI**: `Error: open …/helm/repository/<repo>-index.yaml: no such file or directory`, naming a repo the chart never referenced. Sidestep the cache instead of repairing it — point `HELM_REPOSITORY_CONFIG` at a file containing `repositories: null`. OCI refs don't consult it.
-- **Verify the rendered result both ways.** Assert what should now be absent, then re-render with the old value (`--set`) and confirm it comes back. An empty result is also what a broken render produces, so the negative alone proves nothing.
-- Render from the chart dir the repo actually pins — re-read `Chart.yaml` *after* refreshing the clone, since a Renovate bump may have moved the dependency version out from under the templates you read.
-- Clean up `charts/` and `Chart.lock` afterwards; they're gitignored, so `git status` won't remind you.
+- **`helm dependency update` aborts on a stale shared repo cache even when every dependency is OCI.** The error is `open …/helm/repository/<repo>-index.yaml: no such file or directory`, naming a repo the chart never uses. Point `HELM_REPOSITORY_CONFIG` at a file containing `repositories: null`. OCI refs don't read that file.
+- **Check the render both ways.** Assert that what should be gone is gone, then re-render with the old value (`--set`) and confirm it comes back. A broken render is also empty, so the negative alone proves nothing.
+- Re-read `Chart.yaml` after refreshing the clone, because a Renovate bump may have moved the dependency version. Clean up `charts/` and `Chart.lock` afterwards. They're gitignored, so `git status` won't show them.
 
 ## Reading and testing config inside images
 
-- **To read a file out of a distroless image**, use `crane export <image@digest> - | tar -xO <path>` — distroless has no shell or coreutils, so `kubectl exec … cat` fails with `executable file not found`.
-- **To test a candidate config against that image, bake it in — don't bind-mount.** Mounting a single file (`docker run -v /abs/file:/etc/x/file`) errors on Docker Desktop/macOS with `not a directory: Are you trying to mount a directory onto a file`. Instead write a 2-line Dockerfile that `COPY`s the config over the real one, `docker build -q`, then `docker run --rm --entrypoint <tool> <img> -t`. Run it **as the image's default (non-root) user** so the check reflects runtime, and diff against the stock image to prove which warnings are yours. This turns "will this config work in the cluster?" into a local yes/no in two calls.
+- **Read a file from a distroless image** with `crane export <image@digest> - | tar -xO <path>`. Distroless has no shell, so `kubectl exec … cat` fails.
+- **Test a candidate config by baking it into the image, not by bind-mounting it.** On Docker Desktop, mounting a single file fails with `not a directory`. Write a two-line Dockerfile that `COPY`s the config over the real one, `docker build -q`, then `docker run --rm --entrypoint <tool> <img> -t` as the image's default non-root user. Diff the output against the stock image to see which warnings your config causes.
 
 ## ArgoCD
 
-- No argocd CLI is installed — inspect state via the Application CR directly: `kubectl -n argocd get application <app> -o json` → `.status.resources[]` for per-resource sync status. The field-level diff needs the argocd API (admin creds, blocked by the auto-mode classifier); reproduce it locally instead by rendering the source chart with `helm template` and diffing against live. Case study: work wiki `argocd-crd-list-defaults-outofsync`.
-- **Many apps `Unknown` at once → read `.status.conditions[*].message` before anything else.** `serverSideDiff error … dryrun … is forbidden` means an admission webhook is rejecting Argo's dry-run apply — so real writes are rejected too, and the outage is wider than ArgoCD. Measure the actual impact with `kubectl get events -A --field-selector reason=FailedCreate` (CronJobs failing to create Jobs are the usual first casualty). Which apps show `Unknown` shifts with Argo's refresh cycle, so a clean-looking cluster can still be broken. Case study: work wiki `kyverno-cel-autogen-namespace-denial`.
-- **When a cluster isn't in your kubeconfig at all (common for China `vke-prod`), check ArgoCD app health via metrics instead of kubectl.** `argocd_app_info{name="<app>"}` in that environment's mimir datasource (Grafana `query_prometheus`) carries `sync_status`, `health_status`, and `cluster` labels, so you can confirm Synced/Healthy without cluster access. China env → datasource: `mimir-{staging,demo,prod,common-comp}-volcano` plus `mimir-common-volcano`. ArgoCD Application `.status.conditions` (RepeatedResourceWarning and friends) are *not* exported as metrics — those need the CR, and therefore a reachable cluster.
+- There's no argocd CLI. Read the Application CR instead: `kubectl -n argocd get application <app> -o json`, then `.status.resources[]` for per-resource sync status. The field-level diff needs the argocd API, so reproduce it with `helm template` of the source chart and diff that against live.
+- **Many apps `Unknown` at once: read `.status.conditions[*].message` first.** `serverSideDiff error … dryrun … is forbidden` means an admission webhook is rejecting Argo's dry-run, so real writes are being rejected too. Measure the impact with `kubectl get events -A --field-selector reason=FailedCreate`. CronJobs that can't create Jobs are usually the first casualty. Which apps show `Unknown` changes with each refresh, so a clean-looking cluster can still be broken.
+- **Cluster not in kubeconfig at all?** Query `argocd_app_info{name="<app>"}` in that environment's mimir datasource (see `kognic-observability`). Its `sync_status`, `health_status` and `cluster` labels show Synced/Healthy without cluster access. Application `.status.conditions` aren't exported as metrics, so reading those needs a reachable cluster.

@@ -1,6 +1,6 @@
 # ADR fallback structure
 
-Used by `rules/superpowers.md` when the target repo has no `docs/adr/TEMPLATE.md` of its own. Write to `docs/adr/YYYY-MM-DD-<slug>.md`, date = day started.
+Used by the `adr-plan` skill when the target repo has no `docs/adr/TEMPLATE.md` of its own. Write to `docs/adr/YYYY-MM-DD-<slug>.md`, date = day started.
 
 ```markdown
 # ADR: <feature title>

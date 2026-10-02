@@ -33,3 +33,30 @@ A demo/prod `Chart.yaml` merge came out carrying `v1.8.0` when the merge was mea
 ### A consumer PR conflicted twice, the second time against work it had triggered itself
 
 `protobuf#79` and `visualize-protobuf#48` each conflicted twice while migrating consumers onto a newly released shared action. First against in-flight `GOOGLE_CREDENTIALS`-removal PRs already sitting in local `npm-wif-publish` worktrees on the same lines. Then against Renovate's `v1.5.0` bump — which the `gha-common` release, made as part of the same piece of work, had itself triggered hours earlier. The second collision happened even though the bot picked the identical SHA and comment: the conflict was positional, not textual.
+
+## Recipes
+
+### Commit only your change when the file already holds someone else's hunks
+
+`git commit <path>` commits the working-tree file, so it sweeps in another person's unstaged hunks in that file; a bare `git commit` sweeps in their staged files. Build the commit from a private index instead — the real index and working tree stay untouched:
+
+1. Make a copy of `HEAD`'s version of the file with only your change applied, and `git hash-object -w <copy>` to get its blob sha.
+2. `GIT_INDEX_FILE=/tmp/claude/idx git read-tree HEAD`
+3. Per file: `GIT_INDEX_FILE=/tmp/claude/idx git update-index --add --cacheinfo 100644,<sha>,<path>`
+4. `GIT_INDEX_FILE=/tmp/claude/idx git diff --cached --stat` — the counts must match your change alone.
+5. `GIT_INDEX_FILE=/tmp/claude/idx git commit -m "..."`
+
+Tell you needed this: a commit's insertion/deletion count exceeds your change. Recover a bad bundle with `git reset --soft HEAD~1`.
+
+### rerere replays a stale resolution
+
+`rerere` keys a recorded resolution on the conflict's textual shape. When an earlier resolution settled one axis (field order) and a later conflict on the same hunk also carries a value change (a version pin), rerere replays the old resolution and drops the value — with no conflict markers left. Tell: `Resolved '<file>' using previous resolution` in the merge output. After any conflicted merge, `git diff origin/<base>...HEAD -- <files>` or grep for the values you intended before committing.
+
+### Origin rewrote my stacked branch
+
+When the branch below yours in a stack is rebased (Renovate rebasing its own bump branch is the usual trigger), origin rewrites your branch too: your next push is rejected with `fetch first`, and the fetch reports `(forced update)` on a branch you never force-pushed. Don't merge and don't force-push:
+
+1. `git fetch`
+2. Confirm origin still carries your earlier work: `git diff <your-last-pushed-sha> origin/<branch> -- <files you touched>` is empty.
+3. `git reset --hard origin/<branch>`
+4. Cherry-pick only your new, unpushed commits, then push normally.

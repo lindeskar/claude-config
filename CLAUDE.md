@@ -4,32 +4,19 @@ Version-controlled source of truth for Claude Code configuration (`~/.claude`).
 
 ## Structure
 
-- `global-CLAUDE.md` — global developer instructions, symlinked as `~/.claude/CLAUDE.md` (loaded into every session)
-- `rules/` — one markdown file per topic, symlinked as `~/.claude/rules/`. Claude Code auto-discovers every `.md` file under `~/.claude/rules/` and loads it at session start with the same priority as `CLAUDE.md`, no `@`-include needed. A rule with a `paths:` YAML frontmatter block is **path-scoped**: it loads only when Claude reads a matching file, and is excluded from the byte budget. See [code.claude.com/docs/en/memory](https://code.claude.com/docs/en/memory).
-- `skills/` — one directory per skill, each with a `SKILL.md`, symlinked as `~/.claude/skills/`. Skills load **on demand** rather than every session, so they hold topic knowledge you'd know to go looking for (observability queries, `gh` API traps, message drafting). `rules/skill-routing.md` indexes them — a skill nobody can find is knowledge deleted.
-- `settings.json` — permissions, plugins, and feature flags, symlinked as `~/.claude/settings.json`
-- `reference/` — war-story archive backing the lean rules; **not** auto-loaded, read on demand (see its README)
-- `Makefile` — setup automation and `make lint` (settings validation + always-loaded byte budget)
+- `global-CLAUDE.md` — the always-loaded core, symlinked as `~/.claude/CLAUDE.md`. Cross-cutting behaviour only: how we work together, git/PR invariants, the few verification principles that apply everywhere, environment facts.
+- `rules/` — symlinked as `~/.claude/rules/`. Only **path-scoped** rules (`paths:` frontmatter) live here: they load when Claude reads a matching file. An unscoped rule loads every session and counts against the budget.
+- `skills/` — symlinked as `~/.claude/skills/`, loaded on demand when the description matches. Topic knowledge goes here (verification, worktrees, PR conventions, observability, Kubernetes, GitHub API, Renovate, messaging, ADR/plan, retro). The description is what makes a skill fire: lead with what it is, then concrete triggers.
+- `hooks/` — scripts referenced by `settings.json` hooks (draft-only PRs, unsigned-commit warning).
+- `settings.json` — permissions, sandbox, plugins, hooks, `autoMemoryDirectory` (the work wiki's `memory/`). Symlinked as `~/.claude/settings.json`.
+- `reference/` — war stories and long recipes; not auto-loaded.
+- `Makefile` — `make link` and `make lint` (settings validation + always-loaded byte budget).
 
-## Setup
+## Making changes
 
-```bash
-make link
-```
+Route each new lesson to the cheapest durable home, in this order: a setting, permission or hook (deterministic) → the skill whose topic it is → a work-wiki memory entry → the core, only for cross-cutting behaviour and only by replacing an equally long line. The `retro` skill follows this order.
 
-Symlinks all config files to `~/.claude/`. Refuses to overwrite existing files — remove them first if re-linking.
-
-## Making Changes
-
-- **Add a rule**: create a new `.md` file in `rules/` (one topic per file). Ask first whether it must load *every* session — if you'd know to go looking for it when the topic came up, make it a skill or add `paths:` frontmatter instead.
-- **Edit permissions or plugins**: modify `settings.json`
-- **Edit global instructions**: modify `global-CLAUDE.md`
-- Changes take effect in the next Claude Code session
-
-## Conventions
-
-- Keep `global-CLAUDE.md` concise — it consumes context window in every session
-- Rule files should be short and actionable — commands, not prose
-- No rule should duplicate what a linter, formatter, or hook already enforces
-- New learnings: add the one-line rule (plus the diagnostic "tell" if any) to `rules/`; put the full story in the matching `reference/` file, or in the work wiki when it's Kognic-specific. `make lint` enforces the byte budget.
-- **Never put a session anecdote in an always-loaded rule.** `rules/durable-writing.md` is a small fraction of the corpus, so a violation left in a sibling rule teaches the next session to violate it. Fix it in place rather than writing alongside it.
+- Don't restate what the Claude Code system prompt, a tool description, a setting or a hook already enforces.
+- State the goal or invariant plus its observable tell; no session anecdotes, dates or PR numbers as evidence; no CAPS/MUST.
+- Run `make lint` before committing. The budget is deliberately tight; raise it only with a reason.
+- Rollback point for the slim-down: tag `pre-diet-0`.

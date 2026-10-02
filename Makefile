@@ -41,7 +41,7 @@ relink: unlink link ## Recreate all symlinks
 # Byte budget for always-loaded context: global-CLAUDE.md plus every rules/*.md
 # that has no `paths:` frontmatter. Path-scoped rules load only when Claude reads
 # a matching file, so they are measured but not budgeted. Raise deliberately.
-RULES_BUDGET_BYTES := 44000
+RULES_BUDGET_BYTES := 12000
 
 lint: ## Validate settings.json and detect drift
 	@jq empty settings.json && echo "✓ settings.json is valid JSON"
