@@ -1,10 +1,10 @@
 {
   "env": {
-    "UV_CACHE_DIR": "/tmp/claude/uv-cache",
     "GOCACHE": "/tmp/claude/go-build",
     "GOLANGCI_LINT_CACHE": "/tmp/claude/golangci-cache",
-    "XDG_CACHE_HOME": "/tmp/claude/xdg-cache",
-    "npm_config_cache": "/tmp/claude/npm-cache"
+    "npm_config_cache": "/tmp/claude/npm-cache",
+    "UV_CACHE_DIR": "/tmp/claude/uv-cache",
+    "XDG_CACHE_HOME": "/tmp/claude/xdg-cache"
   },
   "permissions": {
     "allow": [
@@ -70,7 +70,6 @@
       "Bash(helm search repo *)",
       "Bash(helm show *)",
       "Bash(helm template *)",
-      "Bash(kubectl * get *)",
       "Bash(kubectl get *)",
       "Bash(ls *)",
       "Bash(ls)",
@@ -154,6 +153,13 @@
       "WebFetch(domain:www.humanlayer.dev)",
       "WebFetch(domain:www.kognic.com)",
       "WebFetch(domain:www.openpolicyagent.org)",
+      "WebFetch(domain:*.blob.core.windows.net)",
+      "WebFetch(domain:proxy.golang.org)",
+      "WebFetch(domain:pypi.kognic.io)",
+      "WebFetch(domain:registry.npmjs.org)",
+      "WebFetch(domain:registry.terraform.io)",
+      "WebFetch(domain:sum.golang.org)",
+      "WebFetch(domain:vuln.go.dev)",
       "WebSearch"
     ],
     "deny": [
@@ -184,33 +190,19 @@
       "Bash(git restore *)",
       "Bash(git -C * restore *)",
       "Bash(kubectl apply *)",
-      "Bash(kubectl * apply *)",
       "Bash(kubectl create *)",
-      "Bash(kubectl * create *)",
       "Bash(kubectl replace *)",
-      "Bash(kubectl * replace *)",
       "Bash(kubectl delete *)",
-      "Bash(kubectl * delete *)",
       "Bash(kubectl edit *)",
-      "Bash(kubectl * edit *)",
       "Bash(kubectl patch *)",
-      "Bash(kubectl * patch *)",
       "Bash(kubectl scale *)",
-      "Bash(kubectl * scale *)",
       "Bash(kubectl rollout restart *)",
-      "Bash(kubectl * rollout restart *)",
       "Bash(kubectl label *)",
-      "Bash(kubectl * label *)",
       "Bash(kubectl annotate *)",
-      "Bash(kubectl * annotate *)",
       "Bash(kubectl drain *)",
-      "Bash(kubectl * drain *)",
       "Bash(kubectl cordon *)",
-      "Bash(kubectl * cordon *)",
       "Bash(kubectl exec *)",
-      "Bash(kubectl * exec *)",
-      "Bash(kubectl port-forward *)",
-      "Bash(kubectl * port-forward *)"
+      "Bash(kubectl port-forward *)"
     ],
     "defaultMode": "auto",
     "additionalDirectories": [
@@ -220,9 +212,36 @@
       "/Users/alex/Code/_forks",
       "/Users/alex/Code/_public",
       "/Users/alex/Code/_private",
-      "/Users/alex/.claude/plugins/cache/claude-plugins-official/superpowers",
-      "/Users/alex/.claude/plugins/cache/kognic-claude-plugins",
-      "/Users/alex/.claude/memory"
+      "/Users/alex/.claude/plugins/cache/kognic-claude-plugins"
+    ]
+  },
+  "skillOverrides": {
+    "kognic-claude-toolkit:retrospective": "off"
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/alex/Code/_private/claude-config/hooks/warn-unsigned-commit.sh",
+            "if": "Bash(git *commit*)"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/alex/Code/_private/claude-config/hooks/require-draft-pr.sh",
+            "if": "Bash(gh pr create *)"
+          }
+        ]
+      }
     ]
   },
   "worktree": {
@@ -233,12 +252,10 @@
     "command": "wt list statusline --format=claude-code"
   },
   "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": false,
-    "worktrunk@worktrunk": true,
-    "cloudflare@cloudflare": false,
     "anthropic-review-pr@kognic-claude-plugins": true,
+    "cloudflare@cloudflare": false,
+    "gopls-lsp@claude-plugins-official": true,
+    "kognic-brand@kognic-claude-plugins": false,
     "kognic-claude-toolkit@kognic-claude-plugins": true,
     "kognic-claude-wiki@kognic-claude-plugins": true,
     "kognic-code-quality@kognic-claude-plugins": false,
@@ -247,12 +264,12 @@
     "kognic-devops@kognic-claude-plugins": true,
     "kognic-devplat@kognic-claude-plugins": true,
     "kognic-git@kognic-claude-plugins": false,
-    "kognic-golang@kognic-claude-plugins": true,
     "kognic-platform@kognic-claude-plugins": false,
     "kognic-python@kognic-claude-plugins": false,
     "kognic-slides@kognic-claude-plugins": false,
     "kognic-static-reports@kognic-claude-plugins": false,
-    "kognic-brand@kognic-claude-plugins": false
+    "pyright-lsp@claude-plugins-official": true,
+    "worktrunk@worktrunk": true
   },
   "extraKnownMarketplaces": {
     "cloudflare": {
@@ -275,6 +292,7 @@
     "autoAllowBashIfSandboxed": true,
     "network": {
       "allowedDomains": [
+        "*.blob.core.windows.net",
         "*.googleapis.com",
         "agentgateway.dev",
         "api.github.com",
@@ -298,11 +316,17 @@
         "modelcontextprotocol.io",
         "o11y.kognic.io",
         "pkg-containers.githubusercontent.com",
+        "proxy.golang.org",
+        "pypi.kognic.io",
+        "registry.npmjs.org",
+        "registry.terraform.io",
         "results-receiver.actions.githubusercontent.com",
         "spec.modelcontextprotocol.io",
         "staging.kognic.com",
         "staging.kognic.io",
+        "sum.golang.org",
         "support.claude.com",
+        "vuln.go.dev",
         "workspaceupdates.googleblog.com",
         "www.humanlayer.dev",
         "www.kognic.com",
@@ -318,43 +342,13 @@
       "git *",
       "docker *",
       "helm *",
-      "kubectl *",
       "crane *",
       "gcloud *"
     ]
   },
-  "autoMemoryDirectory": "/Users/alex/Code/_private/work/wiki/memory",
-  "skillOverrides": {
-    "kognic-claude-toolkit:retrospective": "off"
-  },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "if": "Bash(gh pr create *)",
-            "command": "bash /Users/alex/Code/_private/claude-config/hooks/require-draft-pr.sh"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "if": "Bash(git *commit*)",
-            "command": "bash /Users/alex/Code/_private/claude-config/hooks/warn-unsigned-commit.sh"
-          }
-        ]
-      }
-    ]
-  },
   "askUserQuestionTimeout": "never",
   "tui": "fullscreen",
+  "autoMemoryDirectory": "/Users/alex/Code/_private/work/wiki/memory",
   "theme": "auto",
   "editorMode": "normal",
   "skipAutoPermissionPrompt": true,
