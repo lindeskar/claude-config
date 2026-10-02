@@ -16,7 +16,7 @@ Feature work goes in a worktree. Create it first and edit only there. The except
 `wt switch --create <branch>` branches from the *local* base.
 
 - Refresh it with `git pull --ff-only` in the checkout that holds it.
-- Floating-tag repos (release-please `gha-*`) reject the pull with `would clobber existing tag`. Run `git fetch origin --tags --force` and pull again. Read the full output, because a rejection you miss leaves you on a stale base.
+- Repos whose releases move a floating `vN` tag (release-please `gha-*`, `application-helm`, `helm-devplat`) reject the pull with `would clobber existing tag`. Run `git fetch origin --tags --force` and pull again. Never run these fetches with `-q`: the rejection is the only output, so a quiet fetch fails with a bare exit 1 and leaves you on a stale base.
 - If the local base is ahead of origin, or dirty with someone else's work, leave it untouched: `git fetch`, then `git worktree add -b <branch> <path> origin/<base>`.
 - Before branching, check `gh pr list` and `wt list` for in-flight work on the same lines.
 
