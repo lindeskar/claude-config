@@ -7,7 +7,7 @@ Version-controlled source of truth for Claude Code configuration (`~/.claude`).
 - `global-CLAUDE.md` — the always-loaded core, symlinked as `~/.claude/CLAUDE.md`. Cross-cutting behaviour only: how we work together, git/PR invariants, the few verification principles that apply everywhere, environment facts.
 - `rules/` — symlinked as `~/.claude/rules/`. Only **path-scoped** rules (`paths:` frontmatter) live here: they load when Claude reads a matching file. An unscoped rule loads every session and counts against the budget.
 - `skills/` — symlinked as `~/.claude/skills/`, loaded on demand when the description matches. Topic knowledge goes here (verification, worktrees, PR conventions, observability, Kubernetes, GitHub API, Renovate, messaging, ADR/plan, retro). The description is what makes a skill fire: lead with what it is, then concrete triggers.
-- `hooks/` — scripts referenced by `settings.json` hooks (draft-only PRs, unsigned-commit warning).
+- `hooks/` — scripts referenced by `settings.json` hooks (draft-only PRs, human-review checkbox in PR bodies, unsigned-commit warning).
 - `settings.json` — permissions, sandbox, plugins, hooks, `autoMemoryDirectory` (the work wiki's `memory/`). Symlinked as `~/.claude/settings.json`.
 - `reference/` — war stories and long recipes; not auto-loaded.
 - `Makefile` — `make link` and `make lint` (settings validation + always-loaded byte budget).
