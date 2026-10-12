@@ -33,7 +33,6 @@ Add `autoreview` (`gh pr create --label autoreview` or `gh pr edit <n> --add-lab
 - Short plain sentences, concrete cause first, plain words; blank lines between cause, fix and cross-reference.
 - Present tense ("both render", not "both rendered"); capitalize Kubernetes/CRD resource types (`Namespace`, `ExternalSecret`, `Application`).
 - Keep the body in sync when a later commit changes something it names; body/title edits don't dismiss approval.
-- End every body, above the attribution line, with `- [ ] I, a human, have reviewed these changes`. The user ticks it after reading the diff; never tick it yourself, and keep its current state when rewriting the body. A hook blocks `gh pr create` without it; PRs opened by `gh stack submit` need it added with `gh pr edit`.
 
 ## Links
 

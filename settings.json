@@ -239,11 +239,6 @@
             "type": "command",
             "command": "bash /Users/alex/Code/_private/claude-config/hooks/require-draft-pr.sh",
             "if": "Bash(gh pr create *)"
-          },
-          {
-            "type": "command",
-            "command": "bash /Users/alex/Code/_private/claude-config/hooks/require-pr-review-checkbox.sh",
-            "if": "Bash(gh pr create *)"
           }
         ]
       }
