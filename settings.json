@@ -252,24 +252,24 @@
     "command": "wt list statusline --format=claude-code"
   },
   "enabledPlugins": {
-    "anthropic-review-pr@kognic-claude-plugins": true,
     "cloudflare@cloudflare": false,
     "gopls-lsp@claude-plugins-official": true,
-    "kognic-brand@kognic-claude-plugins": false,
+    "pyright-lsp@claude-plugins-official": true,
+    "worktrunk@worktrunk": true,
+    "anthropic-review-pr@kognic-claude-plugins": true,
     "kognic-claude-toolkit@kognic-claude-plugins": true,
     "kognic-claude-wiki@kognic-claude-plugins": true,
-    "kognic-code-quality@kognic-claude-plugins": false,
-    "kognic-company-info@kognic-claude-plugins": false,
-    "kognic-design-guidelines@kognic-claude-plugins": false,
+    "kognic-code-quality@kognic-claude-plugins": true,
+    "kognic-company-info@kognic-claude-plugins": true,
+    "kognic-design-guidelines@kognic-claude-plugins": true,
     "kognic-devops@kognic-claude-plugins": true,
     "kognic-devplat@kognic-claude-plugins": true,
-    "kognic-git@kognic-claude-plugins": false,
-    "kognic-platform@kognic-claude-plugins": false,
-    "kognic-python@kognic-claude-plugins": false,
-    "kognic-slides@kognic-claude-plugins": false,
-    "kognic-static-reports@kognic-claude-plugins": false,
-    "pyright-lsp@claude-plugins-official": true,
-    "worktrunk@worktrunk": true
+    "kognic-git@kognic-claude-plugins": true,
+    "kognic-platform@kognic-claude-plugins": true,
+    "kognic-python@kognic-claude-plugins": true,
+    "kognic-slides@kognic-claude-plugins": true,
+    "kognic-static-reports@kognic-claude-plugins": true,
+    "kognic-brand@kognic-claude-plugins": true
   },
   "extraKnownMarketplaces": {
     "cloudflare": {
@@ -283,8 +283,7 @@
       "source": {
         "source": "github",
         "repo": "kognic-internal/claude-plugins"
-      },
-      "autoUpdate": true
+      }
     }
   },
   "sandbox": {
