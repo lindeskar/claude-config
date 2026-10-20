@@ -20,6 +20,7 @@ A change to a repo's own `renovate.json5` is read from that repo's default branc
 
 - Disable a dep: `matchManagers`/`matchDatasources`/`matchPackageNames` plus `enabled: false`. For a Terraform provider, the package name is the source address (`volcengine/volcengine`).
 - Cap below a known break: the same matcher with `allowedVersions: "<= X.Y.Z"`. Renovate still proposes bumps up to the cap.
+- helmv3 deps from an `oci://` repository report `packageName` as `<registry>/<path>/<chart>` (e.g. `ghcr.io/agentgateway/charts/agentgateway`); `matchPackageNames` on the bare chart name matches nothing and fails silently. Confirm with a scoped dry run (`RENOVATE_INCLUDE_PATHS`) that the rule changed the dep's updates.
 - Scope to repos: `matchRepositories` with a regex, plus `!annotell/<repo>` exclusions.
 - Match a customManager's deps by `depName` alone. The manager token (`regex` vs `custom.regex`) has changed between Renovate versions.
 

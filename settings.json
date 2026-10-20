@@ -269,7 +269,8 @@
     "kognic-python@kognic-claude-plugins": true,
     "kognic-slides@kognic-claude-plugins": true,
     "kognic-static-reports@kognic-claude-plugins": true,
-    "kognic-brand@kognic-claude-plugins": true
+    "kognic-brand@kognic-claude-plugins": true,
+    "allium@juxt-plugins": true
   },
   "extraKnownMarketplaces": {
     "cloudflare": {
@@ -283,7 +284,15 @@
       "source": {
         "source": "github",
         "repo": "kognic-internal/claude-plugins"
-      }
+      },
+      "autoUpdate": true
+    },
+    "juxt-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "juxt/claude-plugins"
+      },
+      "autoUpdate": true
     }
   },
   "sandbox": {

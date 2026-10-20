@@ -17,7 +17,7 @@ Feature work goes in a worktree. Create it first and edit only there. The except
 
 - Refresh it with `git pull --ff-only` in the checkout that holds it.
 - Repos whose releases move a floating `vN` tag (release-please `gha-*`, `application-helm`, `helm-devplat`) reject the pull with `would clobber existing tag`. Run `git fetch origin --tags --force` and pull again. Never run these fetches with `-q`: the rejection is the only output, so a quiet fetch fails with a bare exit 1 and leaves you on a stale base.
-- If the local base is ahead of origin, or dirty with someone else's work, leave it untouched: `git fetch`, then `git worktree add -b <branch> <path> origin/<base>`.
+- Behind but clean: `git merge --ff-only origin/<base>`, then `wt switch --create`. Only if the local base is ahead of origin, or dirty with someone else's work, leave it untouched: `git fetch`, then `git worktree add -b <branch> <path> origin/<base>`.
 - Before branching, check `gh pr list` and `wt list` for in-flight work on the same lines.
 
 ## Stay inside
@@ -43,7 +43,7 @@ A push rejected with `fetch first`, where the fetch shows `(forced update)` on a
 ## Cleanup
 
 - After a merge, run `wt remove <branch>`. Squash merges make it refuse with `Branch unmerged`: confirm the PR merged, pull the base, then run `wt remove -D <branch>`.
-- `◎ … in background` isn't a result yet, so confirm with `wt list`. If the worktree is still there, run `git worktree remove --force <path>`, then `git branch -D <branch>`.
+- `◎ … in background` isn't a result yet, so confirm with `wt list`. If the worktree is still there, run `git worktree remove --force <path>`, then `git branch -D <branch>`. Under the sandbox both fail on a worktree holding `.claude/` (`Operation not permitted`, or `could not lock config file .git/config`), and a chained call is sandboxed too. Run each as a standalone sandbox-off `git -C <repo>` call, then `git config --remove-section branch.<branch>` if the config write failed.
 - `○ No worktree found` means git unregistered the worktree but its directory may remain. If it holds only `.claude/`, delete it.
 - If the PR closed unmerged, remove the local worktree and branch but keep the remote branch, which is the only copy.
 - For bulk cleanup, match exact branch names, never a substring.

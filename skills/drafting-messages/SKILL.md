@@ -42,6 +42,8 @@ The user consistently cuts drafts to between a third and a half of their length 
 
 **Broad announcement.** The wider the audience, the less mechanism. Keep the one thing readers must act on and drop internals (file names, tokens, downstream tools). Open with a short title; close with an invitation for feedback, not a how-to.
 
+**Third-party repos.** Before drafting an issue, comment or PR body for a repo outside annotell/kognic-internal, read its CONTRIBUTING and CODE_OF_CONDUCT for a generative-AI policy; if it bans AI-written text, say so and offer talking points first.
+
 **Durable docs.** Reasoning about rejected alternatives ("not Y, because…") goes in a PR comment, not in the doc. Docs and config `description` fields say what the thing does and which invariants an editor could break. PR titles, bodies and comment mechanics: `kognic-pr-conventions`.
 
 ## Editing the user's draft
