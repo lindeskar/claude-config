@@ -28,7 +28,8 @@ Add `autoreview` (`gh pr create --label autoreview` or `gh pr edit <n> --add-lab
 
 ## PR body
 
-- Lead with intent: one sentence of why/what it achieves, plus any tracking link. Add a second sentence only for context the diff can't show. `## Summary` bullets only for genuinely multi-concern changes.
+- Lead with intent: one sentence of why/what it achieves. Add a second sentence only for context the diff can't show. `## Summary` bullets only for genuinely multi-concern changes.
+- A tracking link goes on its own line, `Tracking: <url>`, with a blank line before and after it — never appended to the intent paragraph.
 - Cut what no reviewer will act on: file lists, counts, before/after strings, mechanism walk-throughs, sequencing notes, hedges, versions or sibling PRs you checked against. Describe what changed, not what you left out.
 - Short plain sentences, concrete cause first, plain words; blank lines between cause, fix and cross-reference.
 - Present tense ("both render", not "both rendered"); capitalize Kubernetes/CRD resource types (`Namespace`, `ExternalSecret`, `Application`).

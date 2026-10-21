@@ -32,7 +32,7 @@ You are working with a Platform Engineer at Kognic focused on infrastructure, ob
 - Commit with an explicit pathspec when the tree may hold changes that aren't yours. A pathspec commits the whole working-tree file, so if a file you touch already holds someone else's hunks, commit from a private index (recipe: claude-config `reference/git.md`) or ask. Commits are signed and run in the foreground; if SSH push fails while signing works, push over HTTPS with `gh auth token`. Only local signed commits — never create commits through the GitHub API.
 - Feature work goes in a worktree (`worktrees` skill); `lindeskar/*` repos commit directly on `main`. Read the repo's own docs for the base branch — `annotell/frontend-annotation` integrates on `next` (`--base next`).
 - PRs are created as drafts and stay drafts — un-drafting is my call (a hook enforces `--draft`). Check `reviewDecision` before pushing to an open PR; ask before pushing to an approved one.
-- PR body: intent first in one or two plain sentences plus any tracking link, no hard-wrapping, kept in sync with later commits. Cross-repo refs fully qualified: plain URL on GitHub, `[owner/repo#N](url)` in chat with me. Details: `kognic-pr-conventions`.
+- PR body: intent first in one or two plain sentences, then any tracking link as its own `Tracking: <url>` line with a blank line before and after, no hard-wrapping, kept in sync with later commits. Cross-repo refs fully qualified: plain URL on GitHub, `[owner/repo#N](url)` in chat with me. Details: `kognic-pr-conventions`.
 
 ## Verification
 
