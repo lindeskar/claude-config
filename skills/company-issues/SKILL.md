@@ -14,7 +14,7 @@ When creating a GitHub issue in a repo in the `annotell` org, automatically add 
 
 ## "Add a team issue" → `kognic-internal/devplat`
 
-When the user says "add a team issue" (or "team issue"), create it in **`kognic-internal/devplat`** — the platform team's tracking repo — not in whatever repo the change lives in. Use full GitHub URLs for cross-repo refs in the body (a bare `#NNN` won't autolink from devplat to another repo), and link the issue from any related PR with the plain full devplat URL. Skip the manual project add for `kognic-internal/devplat`: org automation already adds every devplat issue to the PlatEng project (#23). Issue-side `projectItems` comes back empty for this cross-org project, so verify from the project side (`organization(login:"annotell").projectV2(number:23).items`).
+When the user says "add a team issue" (or "team issue"), create it in **`kognic-internal/devplat`** — the platform team's tracking repo — not in whatever repo the change lives in. Use full GitHub URLs for cross-repo refs in the body (a bare `#NNN` won't autolink from devplat to another repo), and link the issue from any related PR with the plain full devplat URL. Skip the manual project add for `kognic-internal/devplat`: org automation already adds every devplat issue to the PlatEng project (#23). Issue-side `projectItems` comes back empty for this cross-org project; verify from the project side with the paginated, filtered query in `github-api` → Projects — `items(last:N)` can miss a just-added item.
 
 ## Procedure
 
