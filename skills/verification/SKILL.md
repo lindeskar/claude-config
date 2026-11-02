@@ -15,12 +15,15 @@ A claim is only as strong as the check behind it. For each situation below, find
 - A template language without conditionals can still derive a value by interpolating a key into a name or reference (GitLab `extends: .base-$[[ inputs.TAG ]]`). Check for that before proposing another caller-set input.
 - "X can't do Y" needs a concrete artifact behind it: a real run, log line, PR or command output, not something you inferred from related notes.
 - Check facts about how a system behaves against its source (code, Dockerfile, config at the deployed ref), not its README or CLAUDE.md, which drift. When the docs are wrong, fix them as part of the work.
+- A vendor-behaviour finding holds only for the code path you traced. When the config moves to another variant (target or backend kind, protocol, mode), re-trace that variant before restating it; defaults often differ by kind. Tell: a check you allowlisted from the old finding still rejects.
 
 ## Naming a root cause
 
 - Something being different from the last good run doesn't make it the cause. List what differs, then for each item ask "confirmed causal, or only present?" Leave unconfirmed suspects alone; harden the observed failure path or re-run to rule out a transient. Tell: you are pinning or reverting something you only saw *next to* the failure.
 - An upstream issue with the same error string shows *one* way to get that error. Check that issue's own discriminator before adopting it.
 - The compiler or build output is authoritative. LSP diagnostics are a hint.
+- **A test asserting the current behaviour proves someone intended it once, not that it is right.** A bug pinned by a passing test and a confident rationale comment is indistinguishable from a deliberate design choice. When the behaviour contradicts a published spec, or the system it replaced, read the spec and the predecessor's source before reporting it as by design. Tell: you are explaining to someone why their bug report is intended behaviour, citing only a test and its comment.
+- A repo's own `CONTRIBUTING.md` or `CLAUDE.md` is not evidence for how a third-party tool behaves. It records what someone believed when they wrote it. Check the tool at the version actually pinned.
 - If something passes locally and fails in CI, compare pinned tool versions before you suspect the code. Reproduce with the binary CI uses.
 - A test that fails only under the sandbox isn't a regression. If the error is `operation not permitted` on a path (`t.TempDir()`, a cache), re-run sandbox-off. If it is a plain assertion mismatch or a connection error, it has a hidden network dependency: make it hermetic.
 - A dynamic credential helper (AWS `credential_process`, `op run`, assume-role) that seems ignored is usually shadowed by a higher-precedence static source (AWS: env vars, then `~/.aws/credentials`, before `credential_process` in `~/.aws/config`). Check those first.
