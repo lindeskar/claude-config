@@ -46,7 +46,7 @@ A push rejected with `fetch first`, where the fetch shows `(forced update)` on a
 - `◎ … in background` isn't a result yet, so confirm with `wt list`. If the worktree is still there, run `git worktree remove --force <path>`, then `git branch -D <branch>`. Under the sandbox both fail on a worktree holding `.claude/` (`Operation not permitted`, or `could not lock config file .git/config`), and a chained call is sandboxed too. Run each as a standalone sandbox-off `git -C <repo>` call, then `git config --remove-section branch.<branch>` if the config write failed.
 - `○ No worktree found` means git unregistered the worktree but its directory may remain. If it holds only `.claude/`, delete it.
 - If the PR closed unmerged, remove the local worktree and branch but keep the remote branch, which is the only copy.
-- For bulk cleanup, match exact branch names, never a substring.
+- For bulk cleanup, run `wt remove -D <exact-branch>` per branch after confirming its PR merged (or closed). Match exact branch names, never a substring; raw `git worktree remove` is only the fallback above.
 - Never push to a merged PR's branch: origin deleted it, so the push makes an orphan. After a gap, check `gh pr view <n> --json state` first.
 
 `wt` (`.worktrees/`) is the default. Built-in `claude --worktree` and subagent `isolation: "worktree"` suit throwaway cases.
