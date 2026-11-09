@@ -4,8 +4,10 @@ description: >-
   Create and maintain GitHub issues in the annotell and kognic-internal orgs, including auto-adding
   them to the Platform Engineering project. Use when creating a company GitHub issue, when the user
   says "add a team issue", or when structuring an issue body, adding findings or status as comments,
-  or wrapping one up with a conclusion. Covers the plateng team-property gate, the devplat tracking
-  repo, and problem-statement-vs-comments structure.
+  or wrapping one up with a conclusion. Also use when triaging, closing or grouping Platform
+  Engineering issues into epics, setting issue types, Priority/Effort fields or labels, or cleaning up
+  the backlog or board 23. Covers the plateng team-property gate, the devplat tracking repo,
+  problem-statement-vs-comments structure, and where the backlog rules live.
 ---
 
 # Company GitHub Issues — Platform Engineering project
@@ -14,7 +16,11 @@ When creating a GitHub issue in a repo in the `annotell` org, automatically add 
 
 ## "Add a team issue" → `kognic-internal/devplat`
 
-When the user says "add a team issue" (or "team issue"), create it in **`kognic-internal/devplat`** — the platform team's tracking repo — not in whatever repo the change lives in. Use full GitHub URLs for cross-repo refs in the body (a bare `#NNN` won't autolink from devplat to another repo), and link the issue from any related PR with the plain full devplat URL. Skip the manual project add for `kognic-internal/devplat`: org automation already adds every devplat issue to the PlatEng project (#23). Issue-side `projectItems` comes back empty for this cross-org project; verify from the project side with the paginated, filtered query in `github-api` → Projects — `items(last:N)` can miss a just-added item.
+When the user says "add a team issue" (or "team issue"), create it in **`kognic-internal/devplat`** — the Platform Engineering team's tracking repo — not in whatever repo the change lives in. Use full GitHub URLs for cross-repo refs in the body (a bare `#NNN` won't autolink from devplat to another repo), and link the issue from any related PR with the plain full devplat URL. Skip the manual project add for `kognic-internal/devplat`: org automation already adds every devplat issue to the PlatEng project (#23). Issue-side `projectItems` comes back empty for this cross-org project; verify from the project side with the paginated, filtered query in `github-api` → Projects — `items(last:N)` can miss a just-added item.
+
+## Types, fields, epics and closing → devplat wiki
+
+The backlog rules live in `kognic-internal/devplat` at `docs/wiki/planning/backlog-and-planning.md`: org issue types and the `Priority`/`Effort` fields instead of labels, the `Upkeep` and `Side Quest` labels, epics tied to the newest `docs/okrs/` file, how to close issues, and getting approval before bulk changes. Read it before triaging, grouping, retyping or closing issues, and give every new issue a type. Read it from the local clone at `origin/master` (`git -C ~/Code/_kognic/devplat show origin/master:docs/wiki/planning/backlog-and-planning.md` after a fetch); don't restate it here.
 
 ## Procedure
 
