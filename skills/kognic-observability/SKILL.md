@@ -22,7 +22,7 @@ For alerts, crash loops or performance issues, in staging as well as prod, start
 | o11y (central stack's own tenant) | `mimir-o11y` | `loki-o11y` |
 | Staging EU | `mimir-staging` | `loki-staging` |
 | Prod EU (Grafana default) | `mimir-prod` | `loki-prod` |
-| Staging / prod China | `mimir-{staging,prod}-volcano` | `loki-{staging,prod}-volcano` |
+| Staging China | `mimir-staging-volcano` | `loki-staging-volcano` |
 | Other China tenants | `mimir-{demo,common,common-comp}-volcano` | `loki-…` same suffixes |
 
 `list_datasources` enumerates everything. Use the o11y pair to monitor the observability stack itself. For example, Loki rejections such as `structured metadata too large` show up under `{namespace="loki"}` on `loki-o11y`, with the tenant `org_id` in the log line rather than in a label. Example `cluster` label values: `staging-eu-west1-green`, `vke-staging-green`.
